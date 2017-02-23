@@ -1,0 +1,38 @@
+DeviceName = MC33816
+CRC32 hex
+78F36464
+CRC32 bin
+0111100011110011
+0110010001100100
+
+The label boost0 is at code line: 11
+The label boost1 is at code line: 55
+The label bypass0 is at code line: 27
+The label bypass1 is at code line: 71
+The label eoinj0 is at code line: 41
+The label eoinj1 is at code line: 85
+The label hold0 is at code line: 31
+The label hold1 is at code line: 75
+The label hold_off0 is at code line: 38
+The label hold_off1 is at code line: 82
+The label hold_on0 is at code line: 36
+The label hold_on1 is at code line: 80
+The label idle0 is at code line: 4
+The label idle1 is at code line: 48
+The label init0 is at code line: 0
+The label init1 is at code line: 44
+The label inj1_start is at code line: 7
+The label inj2_start is at code line: 9
+The label inj3_start is at code line: 51
+The label inj4_start is at code line: 53
+The label peak0 is at code line: 16
+The label peak1 is at code line: 60
+The label peak_off0 is at code line: 24
+The label peak_off1 is at code line: 68
+The label peak_on0 is at code line: 22
+The label peak_on1 is at code line: 66
+
+Code width Hex
+0058
+Code width Dec
+88

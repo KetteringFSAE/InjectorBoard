@@ -1,0 +1,4 @@
+#define VBoost_High 0;
+#define VBoost_Low 1;
+#define ISense4_High 2;
+#define ISense4_Low 3;

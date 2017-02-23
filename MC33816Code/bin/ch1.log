@@ -1,0 +1,8 @@
+Java RUNTIME version used for PSC microcode is : 1.8.0_101
+Java BUILD version used for PSC microcode is : 1.6.0_18
+Using default Syntax file: config\syntax.xml Version: 1.8 for Device: MC33816
+Compiling source from source file : C:\Users\Alex\Downloads\AN4849SW\PeakHold_4inj_VFM_65V\MicrocodeCh1\ch1.psc
+Cipher with NFSR : B6D552EFC9509336FA8A , LFSR : 885B4CC5BEE23AF887D5
+Binary CRC MSB : 0111100011110011, LSB : 0110010001100100
+Hex CRC    MSB : 0x78F3, LSB : 0x6464
+Assembly completed with success.

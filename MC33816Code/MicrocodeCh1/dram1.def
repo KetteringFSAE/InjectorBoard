@@ -1,0 +1,8 @@
+#define IBoost 0;
+#define IPeak 1;
+#define IHold 2;
+#define TPeak_Off 3;
+#define TPeak_Tot 4;
+#define TBypass 5;
+#define THold_Off 6;
+#define THold_Tot 7;
