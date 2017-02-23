@@ -1,0 +1,994 @@
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"functions.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	MAX_SPI_MODE_A_TRANSFER_SIZE
+  18              		.section	.rodata.MAX_SPI_MODE_A_TRANSFER_SIZE,"a",%progbits
+  19              		.align	2
+  22              	MAX_SPI_MODE_A_TRANSFER_SIZE:
+  23 0000 1F000000 		.word	31
+  24              		.global	DELAY_FACTOR
+  25              		.section	.rodata.DELAY_FACTOR,"a",%progbits
+  26              		.align	2
+  29              	DELAY_FACTOR:
+  30 0000 30750000 		.word	30000
+  31              		.section	.text.delay,"ax",%progbits
+  32              		.align	2
+  33              		.global	delay
+  34              		.code	16
+  35              		.thumb_func
+  37              	delay:
+  38              	.LFB0:
+  39              		.file 1 "../Sources/functions.c"
+   1:../Sources/functions.c **** //*********************************************************************************/
+   2:../Sources/functions.c **** //* Freescale reserves  the right to make  changes without  further notice to any */
+   3:../Sources/functions.c **** //* product herein to improve  reliability, function,  or design.  Freescale does */
+   4:../Sources/functions.c **** //* not  assume  any  liability  arising  out of  the application  or use  of any */
+   5:../Sources/functions.c **** //* product, circuit,  or software described herein;  neither does  it convey any */
+   6:../Sources/functions.c **** //* license under its patent rights nor the rights of others.  Freescale products */
+   7:../Sources/functions.c **** //* are not designed, intended,  or authorized for use as  components  in systems */
+   8:../Sources/functions.c **** //* intended for  surgical implant into the body,  or other applications intended */
+   9:../Sources/functions.c **** //* to support life,  or for any other  application  in which the failure  of the */
+  10:../Sources/functions.c **** //* Freescale product could create a situation where personal injury or death may */
+  11:../Sources/functions.c **** //* occur.  Should Buyer purchase or use Freescale products for any such intended */
+  12:../Sources/functions.c **** //* or unauthorized  application,  Buyer shall indemnify and  hold  Freescale and */
+  13:../Sources/functions.c **** //* its officers, employees, subsidiaries, affiliates,  and distributors harmless */
+  14:../Sources/functions.c **** //* against all claims costs, damages, and expenses, and reasonable attorney fees */
+  15:../Sources/functions.c **** //* arising  out of,  directly or indirectly,  any claim  of personal  injury  or */
+  16:../Sources/functions.c **** //* death  associated  with  such unintended  or unauthorized use,  even if  such */
+  17:../Sources/functions.c **** //* claim  alleges  that  Freescale  was  negligent   regarding   the  design  or */
+  18:../Sources/functions.c **** //* manufacture  of the part.  Freescale and the  Freescale logo*  are registered */
+  19:../Sources/functions.c **** //* trademarks of Freescale Ltd.                                                  */
+  20:../Sources/functions.c **** //*********************************************************************************/
+  21:../Sources/functions.c **** 
+  22:../Sources/functions.c **** //////////////////////////////////////////////////////////////////////////////////
+  23:../Sources/functions.c **** //                                                                              //
+  24:../Sources/functions.c **** // File Name: functions.c                                                       //
+  25:../Sources/functions.c **** // Current Revision: 1.0                                                        //
+  26:../Sources/functions.c **** // Purpose: Initializes the MC33816 device using an embedded MCU                //
+  27:../Sources/functions.c **** // Description: Main program that loads the code RAM, data RAM and register     //
+  28:../Sources/functions.c **** //              configurations of the MC33816 device.                           //
+  29:../Sources/functions.c **** // File created by: Freescale Analog, Tempe                                     //
+  30:../Sources/functions.c **** //                                                                              //
+  31:../Sources/functions.c **** // UPDATE HISTORY                                                               //
+  32:../Sources/functions.c **** // REV   AUTHOR      DATE        DESCRIPTION OF CHANGE                          //
+  33:../Sources/functions.c **** // ---   ------     ----         ---------------------                          //
+  34:../Sources/functions.c **** //                                                                              //
+  35:../Sources/functions.c **** //////////////////////////////////////////////////////////////////////////////////
+  36:../Sources/functions.c **** 
+  37:../Sources/functions.c **** /********************************* INCLUDES *************************************/
+  38:../Sources/functions.c **** #include "functions.h" 
+  39:../Sources/functions.c **** 
+  40:../Sources/functions.c **** /********************************* CONSTANTS ************************************/
+  41:../Sources/functions.c **** const int MAX_SPI_MODE_A_TRANSFER_SIZE = 31;  //max size for register config transfer
+  42:../Sources/functions.c **** const int DELAY_FACTOR = 30000;
+  43:../Sources/functions.c **** 
+  44:../Sources/functions.c **** 
+  45:../Sources/functions.c **** //********************************************************************************
+  46:../Sources/functions.c **** //   Function Name   : delay
+  47:../Sources/functions.c **** //   Engineer        : 
+  48:../Sources/functions.c **** //   Date            : 
+  49:../Sources/functions.c **** //   Parameters      : msDelay
+  50:../Sources/functions.c **** //   Returns         : NONE
+  51:../Sources/functions.c **** //   Notes           : NONE
+  52:../Sources/functions.c **** //********************************************************************************
+  53:../Sources/functions.c **** void delay(unsigned long msDelay)
+  54:../Sources/functions.c **** {
+  40              		.loc 1 54 0
+  41              		.cfi_startproc
+  42 0000 80B5     		push	{r7, lr}
+  43              	.LCFI0:
+  44              		.cfi_def_cfa_offset 8
+  45              		.cfi_offset 7, -8
+  46              		.cfi_offset 14, -4
+  47 0002 84B0     		sub	sp, sp, #16
+  48              	.LCFI1:
+  49              		.cfi_def_cfa_offset 24
+  50 0004 00AF     		add	r7, sp, #0
+  51              	.LCFI2:
+  52              		.cfi_def_cfa_register 7
+  53 0006 7860     		str	r0, [r7, #4]
+  55:../Sources/functions.c ****    volatile int i=0;
+  54              		.loc 1 55 0
+  55 0008 0023     		mov	r3, #0
+  56 000a FB60     		str	r3, [r7, #12]
+  56:../Sources/functions.c ****    
+  57:../Sources/functions.c ****    for(i = 0; i < (msDelay * DELAY_FACTOR); i++);
+  57              		.loc 1 57 0
+  58 000c 0023     		mov	r3, #0
+  59 000e FB60     		str	r3, [r7, #12]
+  60 0010 02E0     		b	.L2
+  61              	.L3:
+  62              		.loc 1 57 0 is_stmt 0 discriminator 2
+  63 0012 FB68     		ldr	r3, [r7, #12]
+  64 0014 0133     		add	r3, r3, #1
+  65 0016 FB60     		str	r3, [r7, #12]
+  66              	.L2:
+  67              		.loc 1 57 0 discriminator 1
+  68 0018 FB68     		ldr	r3, [r7, #12]
+  69 001a 1A1C     		mov	r2, r3
+  70 001c 044B     		ldr	r3, .L4
+  71 001e 1B68     		ldr	r3, [r3]
+  72 0020 7968     		ldr	r1, [r7, #4]
+  73 0022 4B43     		mul	r3, r1
+  74 0024 9A42     		cmp	r2, r3
+  75 0026 F4D3     		bcc	.L3
+  58:../Sources/functions.c **** }
+  76              		.loc 1 58 0 is_stmt 1
+  77 0028 BD46     		mov	sp, r7
+  78 002a 04B0     		add	sp, sp, #16
+  79              		@ sp needed for prologue
+  80 002c 80BD     		pop	{r7, pc}
+  81              	.L5:
+  82 002e C046     		.align	2
+  83              	.L4:
+  84 0030 00000000 		.word	DELAY_FACTOR
+  85              		.cfi_endproc
+  86              	.LFE0:
+  88              		.section	.text.download_RAM,"ax",%progbits
+  89              		.align	2
+  90              		.global	download_RAM
+  91              		.code	16
+  92              		.thumb_func
+  94              	download_RAM:
+  95              	.LFB1:
+  59:../Sources/functions.c **** 
+  60:../Sources/functions.c **** 
+  61:../Sources/functions.c **** 
+  62:../Sources/functions.c **** 
+  63:../Sources/functions.c **** //********************************************************************************
+  64:../Sources/functions.c **** //   Function Name   : download_RAM 
+  65:../Sources/functions.c **** //   Engineer        : b39483, b45220 
+  66:../Sources/functions.c **** //   Date            : 2013/09/25 
+  67:../Sources/functions.c **** //   Parameters      : target 
+  68:../Sources/functions.c **** //   Returns         : NONE 
+  69:../Sources/functions.c **** //   Notes           : - Transfers RAM via SPI 
+  70:../Sources/functions.c **** //********************************************************************************
+  71:../Sources/functions.c **** void download_RAM(int target)
+  72:../Sources/functions.c **** {
+  96              		.loc 1 72 0
+  97              		.cfi_startproc
+  98 0000 80B5     		push	{r7, lr}
+  99              	.LCFI3:
+ 100              		.cfi_def_cfa_offset 8
+ 101              		.cfi_offset 7, -8
+ 102              		.cfi_offset 14, -4
+ 103 0002 88B0     		sub	sp, sp, #32
+ 104              	.LCFI4:
+ 105              		.cfi_def_cfa_offset 40
+ 106 0004 00AF     		add	r7, sp, #0
+ 107              	.LCFI5:
+ 108              		.cfi_def_cfa_register 7
+ 109 0006 7860     		str	r0, [r7, #4]
+  73:../Sources/functions.c ****    unsigned char memory_area = 0;         // memory area
+ 110              		.loc 1 73 0
+ 111 0008 3B1C     		mov	r3, r7
+ 112 000a 1F33     		add	r3, r3, #31
+ 113 000c 0022     		mov	r2, #0
+ 114 000e 1A70     		strb	r2, [r3]
+  74:../Sources/functions.c ****    unsigned short start_address = 0;      // start address
+ 115              		.loc 1 74 0
+ 116 0010 3B1C     		mov	r3, r7
+ 117 0012 1C33     		add	r3, r3, #28
+ 118 0014 0022     		mov	r2, #0
+ 119 0016 1A80     		strh	r2, [r3]
+  75:../Sources/functions.c ****    unsigned short codeWidthRegAddr = 0;   // code width register address
+ 120              		.loc 1 75 0
+ 121 0018 3B1C     		mov	r3, r7
+ 122 001a 1A33     		add	r3, r3, #26
+ 123 001c 0022     		mov	r2, #0
+ 124 001e 1A80     		strh	r2, [r3]
+  76:../Sources/functions.c ****    unsigned short size = 0;               // size of RAM data
+ 125              		.loc 1 76 0
+ 126 0020 3B1C     		mov	r3, r7
+ 127 0022 1833     		add	r3, r3, #24
+ 128 0024 0022     		mov	r2, #0
+ 129 0026 1A80     		strh	r2, [r3]
+  77:../Sources/functions.c ****    unsigned short command = 0;            // command data
+ 130              		.loc 1 77 0
+ 131 0028 3B1C     		mov	r3, r7
+ 132 002a 0E33     		add	r3, r3, #14
+ 133 002c 0022     		mov	r2, #0
+ 134 002e 1A80     		strh	r2, [r3]
+  78:../Sources/functions.c ****    unsigned short data = 0;               // RAM data
+ 135              		.loc 1 78 0
+ 136 0030 3B1C     		mov	r3, r7
+ 137 0032 0C33     		add	r3, r3, #12
+ 138 0034 0022     		mov	r2, #0
+ 139 0036 1A80     		strh	r2, [r3]
+  79:../Sources/functions.c ****    unsigned int k = 0;                    // used in loop for writing RAM data to the chip
+ 140              		.loc 1 79 0
+ 141 0038 0023     		mov	r3, #0
+ 142 003a 7B61     		str	r3, [r7, #20]
+  80:../Sources/functions.c ****    unsigned short * RAM_ptr;              // pointer to array of data to be sent to the chip
+  81:../Sources/functions.c **** 
+  82:../Sources/functions.c ****    send_16bit_SPI(0x7FE1);   // sends control word for memory area selection
+ 143              		.loc 1 82 0
+ 144 003c 4D4B     		ldr	r3, .L15
+ 145 003e 181C     		mov	r0, r3
+ 146 0040 FFF7FEFF 		bl	send_16bit_SPI
+  83:../Sources/functions.c ****                              // (rw[15], offset location[14-5], number of words[4-0])
+  84:../Sources/functions.c ****                              // write (0), offset (0x3FF), data (1)
+  85:../Sources/functions.c ****                              // 0111_1111_1110_0001 = 0x7FE1
+  86:../Sources/functions.c **** 
+  87:../Sources/functions.c ****    send_16bit_SPI(0x0004);   // sends data (select common page)
+ 147              		.loc 1 87 0
+ 148 0044 0420     		mov	r0, #4
+ 149 0046 FFF7FEFF 		bl	send_16bit_SPI
+  88:../Sources/functions.c ****                              // (reserved[15-3], data[2-0])
+  89:../Sources/functions.c ****                              // common page (1), CRAM ch2 (0), CRAM ch1 (0)
+  90:../Sources/functions.c ****                              // 0000_0000_0000_0100 = 0x0004
+  91:../Sources/functions.c **** 
+  92:../Sources/functions.c ****    send_16bit_SPI(0x3901);   // sends control word for communication mode / watchdog
+ 150              		.loc 1 92 0
+ 151 004a 4B4B     		ldr	r3, .L15+4
+ 152 004c 181C     		mov	r0, r3
+ 153 004e FFF7FEFF 		bl	send_16bit_SPI
+  93:../Sources/functions.c ****                              // (rw[15], offset location[14-5], number of words[4-0])
+  94:../Sources/functions.c ****                              // write (0), offset (0x1C8), data (1)
+  95:../Sources/functions.c ****                              // 0011_1001_0000_0001 = 0x3901
+  96:../Sources/functions.c **** 
+  97:../Sources/functions.c ****    send_16bit_SPI(0x001F);   // sends data (select options)
+ 154              		.loc 1 97 0
+ 155 0052 1F20     		mov	r0, #31
+ 156 0054 FFF7FEFF 		bl	send_16bit_SPI
+  98:../Sources/functions.c ****                              // (reserved[15-8], MISO slew[7], protocol[6], irqen[5], watchdog[4-0]
+  99:../Sources/functions.c ****                              // MISO slew (0), mode A (0), irqen (0), watchdog (max = 0x1F)
+ 100:../Sources/functions.c ****                              // 0000_0000_0001_1111 = 0x001F
+ 101:../Sources/functions.c **** 
+ 102:../Sources/functions.c ****    switch(target)            // selects target
+ 157              		.loc 1 102 0
+ 158 0058 7B68     		ldr	r3, [r7, #4]
+ 159 005a 012B     		cmp	r3, #1
+ 160 005c 16D0     		beq	.L9
+ 161 005e 022B     		cmp	r3, #2
+ 162 0060 27D0     		beq	.L10
+ 163 0062 002B     		cmp	r3, #0
+ 164 0064 34D1     		bne	.L14
+ 165              	.L8:
+ 103:../Sources/functions.c ****    {
+ 104:../Sources/functions.c ****    case CODE_RAM1:
+ 105:../Sources/functions.c ****       memory_area = 0x1;
+ 166              		.loc 1 105 0
+ 167 0066 3B1C     		mov	r3, r7
+ 168 0068 1F33     		add	r3, r3, #31
+ 169 006a 0122     		mov	r2, #1
+ 170 006c 1A70     		strb	r2, [r3]
+ 106:../Sources/functions.c ****       start_address = 0;
+ 171              		.loc 1 106 0
+ 172 006e 3B1C     		mov	r3, r7
+ 173 0070 1C33     		add	r3, r3, #28
+ 174 0072 0022     		mov	r2, #0
+ 175 0074 1A80     		strh	r2, [r3]
+ 107:../Sources/functions.c ****       codeWidthRegAddr = 0x107;
+ 176              		.loc 1 107 0
+ 177 0076 3B1C     		mov	r3, r7
+ 178 0078 1A33     		add	r3, r3, #26
+ 179 007a 404A     		ldr	r2, .L15+8
+ 180 007c 1A80     		strh	r2, [r3]
+ 108:../Sources/functions.c ****       RAM_ptr = MC33816_code_RAM1;
+ 181              		.loc 1 108 0
+ 182 007e 404B     		ldr	r3, .L15+12
+ 183 0080 3B61     		str	r3, [r7, #16]
+ 109:../Sources/functions.c ****       size = sizeof(MC33816_code_RAM1) / 2;   // gets number of words to be sent
+ 184              		.loc 1 109 0
+ 185 0082 3B1C     		mov	r3, r7
+ 186 0084 1833     		add	r3, r3, #24
+ 187 0086 5822     		mov	r2, #88
+ 188 0088 1A80     		strh	r2, [r3]
+ 110:../Sources/functions.c ****       break;
+ 189              		.loc 1 110 0
+ 190 008a 22E0     		b	.L11
+ 191              	.L9:
+ 111:../Sources/functions.c **** 
+ 112:../Sources/functions.c ****    case CODE_RAM2:
+ 113:../Sources/functions.c ****       memory_area = 0x2;
+ 192              		.loc 1 113 0
+ 193 008c 3B1C     		mov	r3, r7
+ 194 008e 1F33     		add	r3, r3, #31
+ 195 0090 0222     		mov	r2, #2
+ 196 0092 1A70     		strb	r2, [r3]
+ 114:../Sources/functions.c ****       start_address = 0;
+ 197              		.loc 1 114 0
+ 198 0094 3B1C     		mov	r3, r7
+ 199 0096 1C33     		add	r3, r3, #28
+ 200 0098 0022     		mov	r2, #0
+ 201 009a 1A80     		strh	r2, [r3]
+ 115:../Sources/functions.c ****       codeWidthRegAddr = 0x127;
+ 202              		.loc 1 115 0
+ 203 009c 3B1C     		mov	r3, r7
+ 204 009e 1A33     		add	r3, r3, #26
+ 205 00a0 384A     		ldr	r2, .L15+16
+ 206 00a2 1A80     		strh	r2, [r3]
+ 116:../Sources/functions.c ****       RAM_ptr = MC33816_code_RAM2;
+ 207              		.loc 1 116 0
+ 208 00a4 384B     		ldr	r3, .L15+20
+ 209 00a6 3B61     		str	r3, [r7, #16]
+ 117:../Sources/functions.c ****       size = sizeof(MC33816_code_RAM2) / 2;   // gets number of words to be sent
+ 210              		.loc 1 117 0
+ 211 00a8 3B1C     		mov	r3, r7
+ 212 00aa 1833     		add	r3, r3, #24
+ 213 00ac 2E22     		mov	r2, #46
+ 214 00ae 1A80     		strh	r2, [r3]
+ 118:../Sources/functions.c ****       break;
+ 215              		.loc 1 118 0
+ 216 00b0 0FE0     		b	.L11
+ 217              	.L10:
+ 119:../Sources/functions.c **** 
+ 120:../Sources/functions.c ****    case DATA_RAM:
+ 121:../Sources/functions.c ****       memory_area = 0x4;
+ 218              		.loc 1 121 0
+ 219 00b2 3B1C     		mov	r3, r7
+ 220 00b4 1F33     		add	r3, r3, #31
+ 221 00b6 0422     		mov	r2, #4
+ 222 00b8 1A70     		strb	r2, [r3]
+ 122:../Sources/functions.c ****       start_address = 0;
+ 223              		.loc 1 122 0
+ 224 00ba 3B1C     		mov	r3, r7
+ 225 00bc 1C33     		add	r3, r3, #28
+ 226 00be 0022     		mov	r2, #0
+ 227 00c0 1A80     		strh	r2, [r3]
+ 123:../Sources/functions.c ****       RAM_ptr = MC33816_data_RAM;
+ 228              		.loc 1 123 0
+ 229 00c2 324B     		ldr	r3, .L15+24
+ 230 00c4 3B61     		str	r3, [r7, #16]
+ 124:../Sources/functions.c ****       size = sizeof(MC33816_data_RAM) / 2;    // gets number of words to be sent
+ 231              		.loc 1 124 0
+ 232 00c6 3B1C     		mov	r3, r7
+ 233 00c8 1833     		add	r3, r3, #24
+ 234 00ca 8022     		mov	r2, #128
+ 235 00cc 1A80     		strh	r2, [r3]
+ 125:../Sources/functions.c ****       break;
+ 236              		.loc 1 125 0
+ 237 00ce 00E0     		b	.L11
+ 238              	.L14:
+ 126:../Sources/functions.c **** 
+ 127:../Sources/functions.c ****    default:
+ 128:../Sources/functions.c ****       break;
+ 239              		.loc 1 128 0
+ 240 00d0 C046     		mov	r8, r8
+ 241              	.L11:
+ 129:../Sources/functions.c ****    }
+ 130:../Sources/functions.c **** 
+ 131:../Sources/functions.c ****    command = codeWidthRegAddr << 5;   // control width register address
+ 242              		.loc 1 131 0
+ 243 00d2 3B1C     		mov	r3, r7
+ 244 00d4 0E33     		add	r3, r3, #14
+ 245 00d6 3A1C     		mov	r2, r7
+ 246 00d8 1A32     		add	r2, r2, #26
+ 247 00da 1288     		ldrh	r2, [r2]
+ 248 00dc 5201     		lsl	r2, r2, #5
+ 249 00de 1A80     		strh	r2, [r3]
+ 132:../Sources/functions.c ****    command |= 1;                      // number of words to follow
+ 250              		.loc 1 132 0
+ 251 00e0 3B1C     		mov	r3, r7
+ 252 00e2 0E33     		add	r3, r3, #14
+ 253 00e4 3A1C     		mov	r2, r7
+ 254 00e6 0E32     		add	r2, r2, #14
+ 255 00e8 1288     		ldrh	r2, [r2]
+ 256 00ea 0121     		mov	r1, #1
+ 257 00ec 0A43     		orr	r2, r1
+ 258 00ee 1A80     		strh	r2, [r3]
+ 133:../Sources/functions.c **** 
+ 134:../Sources/functions.c ****    send_16bit_SPI(command);           // sends address width command
+ 259              		.loc 1 134 0
+ 260 00f0 3B1C     		mov	r3, r7
+ 261 00f2 0E33     		add	r3, r3, #14
+ 262 00f4 1B88     		ldrh	r3, [r3]
+ 263 00f6 181C     		mov	r0, r3
+ 264 00f8 FFF7FEFF 		bl	send_16bit_SPI
+ 135:../Sources/functions.c **** 
+ 136:../Sources/functions.c ****    send_16bit_SPI(size);              // sends size
+ 265              		.loc 1 136 0
+ 266 00fc 3B1C     		mov	r3, r7
+ 267 00fe 1833     		add	r3, r3, #24
+ 268 0100 1B88     		ldrh	r3, [r3]
+ 269 0102 181C     		mov	r0, r3
+ 270 0104 FFF7FEFF 		bl	send_16bit_SPI
+ 137:../Sources/functions.c **** 
+ 138:../Sources/functions.c ****    send_16bit_SPI(0x7FE1);            // sends control word for memory area selection
+ 271              		.loc 1 138 0
+ 272 0108 1A4B     		ldr	r3, .L15
+ 273 010a 181C     		mov	r0, r3
+ 274 010c FFF7FEFF 		bl	send_16bit_SPI
+ 139:../Sources/functions.c ****                                       // (rw[15], offset location[14-5], number of words[4-0])
+ 140:../Sources/functions.c ****                                       // write (0), offset (0x3FF), data (1)
+ 141:../Sources/functions.c ****                                       // 0111_1111_1110_0001 = 0x7FE1
+ 142:../Sources/functions.c **** 
+ 143:../Sources/functions.c ****    send_16bit_SPI(memory_area);       // sends data (selects location)
+ 275              		.loc 1 143 0
+ 276 0110 3B1C     		mov	r3, r7
+ 277 0112 1F33     		add	r3, r3, #31
+ 278 0114 1B78     		ldrb	r3, [r3]
+ 279 0116 9BB2     		uxth	r3, r3
+ 280 0118 181C     		mov	r0, r3
+ 281 011a FFF7FEFF 		bl	send_16bit_SPI
+ 144:../Sources/functions.c **** 
+ 145:../Sources/functions.c ****    command = start_address << 5;
+ 282              		.loc 1 145 0
+ 283 011e 3B1C     		mov	r3, r7
+ 284 0120 0E33     		add	r3, r3, #14
+ 285 0122 3A1C     		mov	r2, r7
+ 286 0124 1C32     		add	r2, r2, #28
+ 287 0126 1288     		ldrh	r2, [r2]
+ 288 0128 5201     		lsl	r2, r2, #5
+ 289 012a 1A80     		strh	r2, [r3]
+ 146:../Sources/functions.c ****    send_16bit_SPI(command);           // sends start address command
+ 290              		.loc 1 146 0
+ 291 012c 3B1C     		mov	r3, r7
+ 292 012e 0E33     		add	r3, r3, #14
+ 293 0130 1B88     		ldrh	r3, [r3]
+ 294 0132 181C     		mov	r0, r3
+ 295 0134 FFF7FEFF 		bl	send_16bit_SPI
+ 147:../Sources/functions.c **** 
+ 148:../Sources/functions.c ****    for(k = 0; k < size; k++)          // downloads RAM
+ 296              		.loc 1 148 0
+ 297 0138 0023     		mov	r3, #0
+ 298 013a 7B61     		str	r3, [r7, #20]
+ 299 013c 10E0     		b	.L12
+ 300              	.L13:
+ 149:../Sources/functions.c ****    {
+ 150:../Sources/functions.c ****       data = *RAM_ptr;                // retrieves data to be sent
+ 301              		.loc 1 150 0 discriminator 2
+ 302 013e 3B1C     		mov	r3, r7
+ 303 0140 0C33     		add	r3, r3, #12
+ 304 0142 3A69     		ldr	r2, [r7, #16]
+ 305 0144 1288     		ldrh	r2, [r2]
+ 306 0146 1A80     		strh	r2, [r3]
+ 151:../Sources/functions.c ****       send_16bit_SPI(data);           // sends data
+ 307              		.loc 1 151 0 discriminator 2
+ 308 0148 3B1C     		mov	r3, r7
+ 309 014a 0C33     		add	r3, r3, #12
+ 310 014c 1B88     		ldrh	r3, [r3]
+ 311 014e 181C     		mov	r0, r3
+ 312 0150 FFF7FEFF 		bl	send_16bit_SPI
+ 152:../Sources/functions.c ****       RAM_ptr++;
+ 313              		.loc 1 152 0 discriminator 2
+ 314 0154 3B69     		ldr	r3, [r7, #16]
+ 315 0156 0233     		add	r3, r3, #2
+ 316 0158 3B61     		str	r3, [r7, #16]
+ 148:../Sources/functions.c ****    for(k = 0; k < size; k++)          // downloads RAM
+ 317              		.loc 1 148 0 discriminator 2
+ 318 015a 7B69     		ldr	r3, [r7, #20]
+ 319 015c 0133     		add	r3, r3, #1
+ 320 015e 7B61     		str	r3, [r7, #20]
+ 321              	.L12:
+ 148:../Sources/functions.c ****    for(k = 0; k < size; k++)          // downloads RAM
+ 322              		.loc 1 148 0 is_stmt 0 discriminator 1
+ 323 0160 3B1C     		mov	r3, r7
+ 324 0162 1833     		add	r3, r3, #24
+ 325 0164 1A88     		ldrh	r2, [r3]
+ 326 0166 7B69     		ldr	r3, [r7, #20]
+ 327 0168 9A42     		cmp	r2, r3
+ 328 016a E8D8     		bhi	.L13
+ 153:../Sources/functions.c ****    }
+ 154:../Sources/functions.c **** 
+ 155:../Sources/functions.c **** } //end download_RAM
+ 329              		.loc 1 155 0 is_stmt 1
+ 330 016c BD46     		mov	sp, r7
+ 331 016e 08B0     		add	sp, sp, #32
+ 332              		@ sp needed for prologue
+ 333 0170 80BD     		pop	{r7, pc}
+ 334              	.L16:
+ 335 0172 C046     		.align	2
+ 336              	.L15:
+ 337 0174 E17F0000 		.word	32737
+ 338 0178 01390000 		.word	14593
+ 339 017c 07010000 		.word	263
+ 340 0180 00000000 		.word	MC33816_code_RAM1
+ 341 0184 27010000 		.word	295
+ 342 0188 00000000 		.word	MC33816_code_RAM2
+ 343 018c 00000000 		.word	MC33816_data_RAM
+ 344              		.cfi_endproc
+ 345              	.LFE1:
+ 347              		.section	.text.download_register,"ax",%progbits
+ 348              		.align	2
+ 349              		.global	download_register
+ 350              		.code	16
+ 351              		.thumb_func
+ 353              	download_register:
+ 354              	.LFB2:
+ 156:../Sources/functions.c **** 
+ 157:../Sources/functions.c **** 
+ 158:../Sources/functions.c **** 
+ 159:../Sources/functions.c **** //*******************************************************************************/
+ 160:../Sources/functions.c **** //   Function Name   : download_register
+ 161:../Sources/functions.c **** //   Engineer        : b39483, b45220
+ 162:../Sources/functions.c **** //   Date            : 2013/09/25
+ 163:../Sources/functions.c **** //   Parameters      : r_target
+ 164:../Sources/functions.c **** //   Returns         : NONE
+ 165:../Sources/functions.c **** //   Notes           : - Downloads   register configurations via SPI
+ 166:../Sources/functions.c **** //*******************************************************************************/
+ 167:../Sources/functions.c **** void download_register(int r_target)
+ 168:../Sources/functions.c **** {
+ 355              		.loc 1 168 0
+ 356              		.cfi_startproc
+ 357 0000 80B5     		push	{r7, lr}
+ 358              	.LCFI6:
+ 359              		.cfi_def_cfa_offset 8
+ 360              		.cfi_offset 7, -8
+ 361              		.cfi_offset 14, -4
+ 362 0002 88B0     		sub	sp, sp, #32
+ 363              	.LCFI7:
+ 364              		.cfi_def_cfa_offset 40
+ 365 0004 00AF     		add	r7, sp, #0
+ 366              	.LCFI8:
+ 367              		.cfi_def_cfa_register 7
+ 368 0006 7860     		str	r0, [r7, #4]
+ 169:../Sources/functions.c ****    unsigned short r_start_address = 0;  // start address
+ 369              		.loc 1 169 0
+ 370 0008 3B1C     		mov	r3, r7
+ 371 000a 1E33     		add	r3, r3, #30
+ 372 000c 0022     		mov	r2, #0
+ 373 000e 1A80     		strh	r2, [r3]
+ 170:../Sources/functions.c ****    unsigned short r_size = 0;           // size of configuration data
+ 374              		.loc 1 170 0
+ 375 0010 3B1C     		mov	r3, r7
+ 376 0012 1C33     		add	r3, r3, #28
+ 377 0014 0022     		mov	r2, #0
+ 378 0016 1A80     		strh	r2, [r3]
+ 171:../Sources/functions.c ****    unsigned short r_command = 0;        // command data
+ 379              		.loc 1 171 0
+ 380 0018 3B1C     		mov	r3, r7
+ 381 001a 0E33     		add	r3, r3, #14
+ 382 001c 0022     		mov	r2, #0
+ 383 001e 1A80     		strh	r2, [r3]
+ 172:../Sources/functions.c ****    unsigned short r_data = 0;           // configuration data
+ 384              		.loc 1 172 0
+ 385 0020 3B1C     		mov	r3, r7
+ 386 0022 0C33     		add	r3, r3, #12
+ 387 0024 0022     		mov	r2, #0
+ 388 0026 1A80     		strh	r2, [r3]
+ 173:../Sources/functions.c ****    int n = 0;                           // used for loop for writing data to the chip
+ 389              		.loc 1 173 0
+ 390 0028 0023     		mov	r3, #0
+ 391 002a BB61     		str	r3, [r7, #24]
+ 174:../Sources/functions.c ****    unsigned short remainder_size = 0;   // remainder size
+ 392              		.loc 1 174 0
+ 393 002c 3B1C     		mov	r3, r7
+ 394 002e 1633     		add	r3, r3, #22
+ 395 0030 0022     		mov	r2, #0
+ 396 0032 1A80     		strh	r2, [r3]
+ 175:../Sources/functions.c ****    unsigned short * reg_ptr;            // pointer to array of data to be sent to the chip
+ 176:../Sources/functions.c **** 
+ 177:../Sources/functions.c ****    switch(r_target)                     // selects target
+ 397              		.loc 1 177 0
+ 398 0034 7B68     		ldr	r3, [r7, #4]
+ 399 0036 042B     		cmp	r3, #4
+ 400 0038 41D8     		bhi	.L32
+ 401 003a 7B68     		ldr	r3, [r7, #4]
+ 402 003c 9A00     		lsl	r2, r3, #2
+ 403 003e 6C4B     		ldr	r3, .L33
+ 404 0040 D318     		add	r3, r2, r3
+ 405 0042 1B68     		ldr	r3, [r3]
+ 406 0044 9F46     		mov	pc, r3
+ 407              		.section	.rodata.download_register,"a",%progbits
+ 408              		.align	2
+ 409              	.L24:
+ 410 0000 46000000 		.word	.L19
+ 411 0004 5E000000 		.word	.L20
+ 412 0008 76000000 		.word	.L21
+ 413 000c 8E000000 		.word	.L22
+ 414 0010 A6000000 		.word	.L23
+ 415              		.section	.text.download_register
+ 416              	.L19:
+ 178:../Sources/functions.c ****    {
+ 179:../Sources/functions.c ****    case 0:                              // channel 1 configurations
+ 180:../Sources/functions.c ****       r_start_address = 0x100;
+ 417              		.loc 1 180 0
+ 418 0046 3B1C     		mov	r3, r7
+ 419 0048 1E33     		add	r3, r3, #30
+ 420 004a 8022     		mov	r2, #128
+ 421 004c 5200     		lsl	r2, r2, #1
+ 422 004e 1A80     		strh	r2, [r3]
+ 181:../Sources/functions.c ****       reg_ptr = MC33816_ch1_config;
+ 423              		.loc 1 181 0
+ 424 0050 684B     		ldr	r3, .L33+4
+ 425 0052 3B61     		str	r3, [r7, #16]
+ 182:../Sources/functions.c ****       r_size = sizeof(MC33816_ch1_config) / 2;  // gets number of words to be sent
+ 426              		.loc 1 182 0
+ 427 0054 3B1C     		mov	r3, r7
+ 428 0056 1C33     		add	r3, r3, #28
+ 429 0058 1322     		mov	r2, #19
+ 430 005a 1A80     		strh	r2, [r3]
+ 183:../Sources/functions.c ****       break;
+ 431              		.loc 1 183 0
+ 432 005c 30E0     		b	.L25
+ 433              	.L20:
+ 184:../Sources/functions.c **** 
+ 185:../Sources/functions.c ****    case 1:                              // channel 2 configurations
+ 186:../Sources/functions.c ****       r_start_address = 0x120;
+ 434              		.loc 1 186 0
+ 435 005e 3B1C     		mov	r3, r7
+ 436 0060 1E33     		add	r3, r3, #30
+ 437 0062 9022     		mov	r2, #144
+ 438 0064 5200     		lsl	r2, r2, #1
+ 439 0066 1A80     		strh	r2, [r3]
+ 187:../Sources/functions.c ****       reg_ptr = MC33816_ch2_config;
+ 440              		.loc 1 187 0
+ 441 0068 634B     		ldr	r3, .L33+8
+ 442 006a 3B61     		str	r3, [r7, #16]
+ 188:../Sources/functions.c ****       r_size = sizeof(MC33816_ch2_config) / 2;  // gets number of words to be sent
+ 443              		.loc 1 188 0
+ 444 006c 3B1C     		mov	r3, r7
+ 445 006e 1C33     		add	r3, r3, #28
+ 446 0070 1322     		mov	r2, #19
+ 447 0072 1A80     		strh	r2, [r3]
+ 189:../Sources/functions.c ****       break;
+ 448              		.loc 1 189 0
+ 449 0074 24E0     		b	.L25
+ 450              	.L21:
+ 190:../Sources/functions.c **** 
+ 191:../Sources/functions.c ****    case 2:                              // diagnostic configurations
+ 192:../Sources/functions.c ****       r_start_address = 0x140;
+ 451              		.loc 1 192 0
+ 452 0076 3B1C     		mov	r3, r7
+ 453 0078 1E33     		add	r3, r3, #30
+ 454 007a A022     		mov	r2, #160
+ 455 007c 5200     		lsl	r2, r2, #1
+ 456 007e 1A80     		strh	r2, [r3]
+ 193:../Sources/functions.c ****       reg_ptr = MC33816_diag_config;
+ 457              		.loc 1 193 0
+ 458 0080 5E4B     		ldr	r3, .L33+12
+ 459 0082 3B61     		str	r3, [r7, #16]
+ 194:../Sources/functions.c ****       r_size = sizeof(MC33816_diag_config) / 2; // gets number of words to be sent
+ 460              		.loc 1 194 0
+ 461 0084 3B1C     		mov	r3, r7
+ 462 0086 1C33     		add	r3, r3, #28
+ 463 0088 2C22     		mov	r2, #44
+ 464 008a 1A80     		strh	r2, [r3]
+ 195:../Sources/functions.c ****       break;
+ 465              		.loc 1 195 0
+ 466 008c 18E0     		b	.L25
+ 467              	.L22:
+ 196:../Sources/functions.c **** 
+ 197:../Sources/functions.c ****    case 3:                              // IO configurations
+ 198:../Sources/functions.c ****       r_start_address = 0x180;
+ 468              		.loc 1 198 0
+ 469 008e 3B1C     		mov	r3, r7
+ 470 0090 1E33     		add	r3, r3, #30
+ 471 0092 C022     		mov	r2, #192
+ 472 0094 5200     		lsl	r2, r2, #1
+ 473 0096 1A80     		strh	r2, [r3]
+ 199:../Sources/functions.c ****       reg_ptr = MC33816_io_config;
+ 474              		.loc 1 199 0
+ 475 0098 594B     		ldr	r3, .L33+16
+ 476 009a 3B61     		str	r3, [r7, #16]
+ 200:../Sources/functions.c ****       r_size = sizeof(MC33816_io_config) / 2;   // gets number of words to be sent
+ 477              		.loc 1 200 0
+ 478 009c 3B1C     		mov	r3, r7
+ 479 009e 1C33     		add	r3, r3, #28
+ 480 00a0 2C22     		mov	r2, #44
+ 481 00a2 1A80     		strh	r2, [r3]
+ 201:../Sources/functions.c ****       break;
+ 482              		.loc 1 201 0
+ 483 00a4 0CE0     		b	.L25
+ 484              	.L23:
+ 202:../Sources/functions.c **** 
+ 203:../Sources/functions.c ****    case 4:                              // main configurations
+ 204:../Sources/functions.c ****       r_start_address = 0x1C0;
+ 485              		.loc 1 204 0
+ 486 00a6 3B1C     		mov	r3, r7
+ 487 00a8 1E33     		add	r3, r3, #30
+ 488 00aa E022     		mov	r2, #224
+ 489 00ac 5200     		lsl	r2, r2, #1
+ 490 00ae 1A80     		strh	r2, [r3]
+ 205:../Sources/functions.c ****       reg_ptr = MC33816_main_config;
+ 491              		.loc 1 205 0
+ 492 00b0 544B     		ldr	r3, .L33+20
+ 493 00b2 3B61     		str	r3, [r7, #16]
+ 206:../Sources/functions.c ****       r_size = sizeof(MC33816_main_config) / 2; // gets number of words to be sent
+ 494              		.loc 1 206 0
+ 495 00b4 3B1C     		mov	r3, r7
+ 496 00b6 1C33     		add	r3, r3, #28
+ 497 00b8 1D22     		mov	r2, #29
+ 498 00ba 1A80     		strh	r2, [r3]
+ 207:../Sources/functions.c ****       break;
+ 499              		.loc 1 207 0
+ 500 00bc 00E0     		b	.L25
+ 501              	.L32:
+ 208:../Sources/functions.c **** 
+ 209:../Sources/functions.c ****    default:
+ 210:../Sources/functions.c ****       break;
+ 502              		.loc 1 210 0
+ 503 00be C046     		mov	r8, r8
+ 504              	.L25:
+ 211:../Sources/functions.c ****    }
+ 212:../Sources/functions.c **** 
+ 213:../Sources/functions.c ****    send_16bit_SPI(0x7FE1);   // sends control word for memory area selection
+ 505              		.loc 1 213 0
+ 506 00c0 514B     		ldr	r3, .L33+24
+ 507 00c2 181C     		mov	r0, r3
+ 508 00c4 FFF7FEFF 		bl	send_16bit_SPI
+ 214:../Sources/functions.c ****                              // (rw[15], offset location[14-5], number of words[4-0])
+ 215:../Sources/functions.c ****                              // write (0), offset (0x3FF), data (1)
+ 216:../Sources/functions.c ****                              // 0111_1111_1110_0001 = 0x7FE1
+ 217:../Sources/functions.c **** 
+ 218:../Sources/functions.c ****    send_16bit_SPI(0x0004);   // sends data (select common page)
+ 509              		.loc 1 218 0
+ 510 00c8 0420     		mov	r0, #4
+ 511 00ca FFF7FEFF 		bl	send_16bit_SPI
+ 219:../Sources/functions.c ****                              // (reserved[15-3], data[2-0])
+ 220:../Sources/functions.c ****                              // common page (1), CRAM ch2 (0), CRAM ch1 (0)
+ 221:../Sources/functions.c ****                              // 0000_0000_0000_0100 = 0x0004
+ 222:../Sources/functions.c **** 
+ 223:../Sources/functions.c ****    send_16bit_SPI(0x3901);   // sends control word for communication mode / watchdog
+ 512              		.loc 1 223 0
+ 513 00ce 4F4B     		ldr	r3, .L33+28
+ 514 00d0 181C     		mov	r0, r3
+ 515 00d2 FFF7FEFF 		bl	send_16bit_SPI
+ 224:../Sources/functions.c ****                              // (rw[15], offset location[14-5], number of words[4-0])
+ 225:../Sources/functions.c ****                              // write (0), offset (0x1C8), data (1)
+ 226:../Sources/functions.c ****                              // 0011_1001_0000_0001 = 0x3901
+ 227:../Sources/functions.c **** 
+ 228:../Sources/functions.c ****    send_16bit_SPI(0x001F);   // sends data (select options)
+ 516              		.loc 1 228 0
+ 517 00d6 1F20     		mov	r0, #31
+ 518 00d8 FFF7FEFF 		bl	send_16bit_SPI
+ 229:../Sources/functions.c ****                              // (reserved[15-8], MISO slew[7], protocol[6], irqen[5], watchdog[4-0]
+ 230:../Sources/functions.c ****                              // MISO slew (0), mode A (0), irqen (0), watchdog (max = 0x1F)
+ 231:../Sources/functions.c ****                              // 0000_0000_0001_1111 = 0x001F
+ 232:../Sources/functions.c **** 
+ 233:../Sources/functions.c ****    if(r_size > MAX_SPI_MODE_A_TRANSFER_SIZE)   //if size is too large, split into two sections
+ 519              		.loc 1 233 0
+ 520 00dc 3B1C     		mov	r3, r7
+ 521 00de 1C33     		add	r3, r3, #28
+ 522 00e0 1A88     		ldrh	r2, [r3]
+ 523 00e2 4B4B     		ldr	r3, .L33+32
+ 524 00e4 1B68     		ldr	r3, [r3]
+ 525 00e6 9A42     		cmp	r2, r3
+ 526 00e8 0EDD     		ble	.L26
+ 234:../Sources/functions.c ****    {
+ 235:../Sources/functions.c ****       remainder_size = r_size - MAX_SPI_MODE_A_TRANSFER_SIZE;  // creates remaining size
+ 527              		.loc 1 235 0
+ 528 00ea 494B     		ldr	r3, .L33+32
+ 529 00ec 1B68     		ldr	r3, [r3]
+ 530 00ee 9AB2     		uxth	r2, r3
+ 531 00f0 3B1C     		mov	r3, r7
+ 532 00f2 1633     		add	r3, r3, #22
+ 533 00f4 391C     		mov	r1, r7
+ 534 00f6 1C31     		add	r1, r1, #28
+ 535 00f8 0988     		ldrh	r1, [r1]
+ 536 00fa 8A1A     		sub	r2, r1, r2
+ 537 00fc 1A80     		strh	r2, [r3]
+ 236:../Sources/functions.c ****       r_size = MAX_SPI_MODE_A_TRANSFER_SIZE;                   // sets first size
+ 538              		.loc 1 236 0
+ 539 00fe 444B     		ldr	r3, .L33+32
+ 540 0100 1A68     		ldr	r2, [r3]
+ 541 0102 3B1C     		mov	r3, r7
+ 542 0104 1C33     		add	r3, r3, #28
+ 543 0106 1A80     		strh	r2, [r3]
+ 544              	.L26:
+ 237:../Sources/functions.c ****    }
+ 238:../Sources/functions.c **** 
+ 239:../Sources/functions.c ****    r_command = r_start_address << 5;      // start address
+ 545              		.loc 1 239 0
+ 546 0108 3B1C     		mov	r3, r7
+ 547 010a 0E33     		add	r3, r3, #14
+ 548 010c 3A1C     		mov	r2, r7
+ 549 010e 1E32     		add	r2, r2, #30
+ 550 0110 1288     		ldrh	r2, [r2]
+ 551 0112 5201     		lsl	r2, r2, #5
+ 552 0114 1A80     		strh	r2, [r3]
+ 240:../Sources/functions.c ****    r_command += r_size;                   // number of words to follow
+ 553              		.loc 1 240 0
+ 554 0116 3B1C     		mov	r3, r7
+ 555 0118 0E33     		add	r3, r3, #14
+ 556 011a 391C     		mov	r1, r7
+ 557 011c 0E31     		add	r1, r1, #14
+ 558 011e 3A1C     		mov	r2, r7
+ 559 0120 1C32     		add	r2, r2, #28
+ 560 0122 0988     		ldrh	r1, [r1]
+ 561 0124 1288     		ldrh	r2, [r2]
+ 562 0126 8A18     		add	r2, r1, r2
+ 563 0128 1A80     		strh	r2, [r3]
+ 241:../Sources/functions.c **** 
+ 242:../Sources/functions.c ****    send_16bit_SPI(r_command);             // sends address and number of words to be sent
+ 564              		.loc 1 242 0
+ 565 012a 3B1C     		mov	r3, r7
+ 566 012c 0E33     		add	r3, r3, #14
+ 567 012e 1B88     		ldrh	r3, [r3]
+ 568 0130 181C     		mov	r0, r3
+ 569 0132 FFF7FEFF 		bl	send_16bit_SPI
+ 243:../Sources/functions.c **** 
+ 244:../Sources/functions.c ****    for(n = 0; n < r_size; n++)            // downloads register configurations
+ 570              		.loc 1 244 0
+ 571 0136 0023     		mov	r3, #0
+ 572 0138 BB61     		str	r3, [r7, #24]
+ 573 013a 10E0     		b	.L27
+ 574              	.L28:
+ 245:../Sources/functions.c ****    {
+ 246:../Sources/functions.c ****       r_data = *reg_ptr;                  // retrieves data to be sent
+ 575              		.loc 1 246 0 discriminator 2
+ 576 013c 3B1C     		mov	r3, r7
+ 577 013e 0C33     		add	r3, r3, #12
+ 578 0140 3A69     		ldr	r2, [r7, #16]
+ 579 0142 1288     		ldrh	r2, [r2]
+ 580 0144 1A80     		strh	r2, [r3]
+ 247:../Sources/functions.c ****       send_16bit_SPI(r_data);             // sends data
+ 581              		.loc 1 247 0 discriminator 2
+ 582 0146 3B1C     		mov	r3, r7
+ 583 0148 0C33     		add	r3, r3, #12
+ 584 014a 1B88     		ldrh	r3, [r3]
+ 585 014c 181C     		mov	r0, r3
+ 586 014e FFF7FEFF 		bl	send_16bit_SPI
+ 248:../Sources/functions.c ****       reg_ptr++;
+ 587              		.loc 1 248 0 discriminator 2
+ 588 0152 3B69     		ldr	r3, [r7, #16]
+ 589 0154 0233     		add	r3, r3, #2
+ 590 0156 3B61     		str	r3, [r7, #16]
+ 244:../Sources/functions.c ****    for(n = 0; n < r_size; n++)            // downloads register configurations
+ 591              		.loc 1 244 0 discriminator 2
+ 592 0158 BB69     		ldr	r3, [r7, #24]
+ 593 015a 0133     		add	r3, r3, #1
+ 594 015c BB61     		str	r3, [r7, #24]
+ 595              	.L27:
+ 244:../Sources/functions.c ****    for(n = 0; n < r_size; n++)            // downloads register configurations
+ 596              		.loc 1 244 0 is_stmt 0 discriminator 1
+ 597 015e 3B1C     		mov	r3, r7
+ 598 0160 1C33     		add	r3, r3, #28
+ 599 0162 1A88     		ldrh	r2, [r3]
+ 600 0164 BB69     		ldr	r3, [r7, #24]
+ 601 0166 9A42     		cmp	r2, r3
+ 602 0168 E8DC     		bgt	.L28
+ 249:../Sources/functions.c ****    }
+ 250:../Sources/functions.c **** 
+ 251:../Sources/functions.c ****    if(remainder_size > 0)                 // if remainder size is greater than 0, download the rest
+ 603              		.loc 1 251 0 is_stmt 1
+ 604 016a 3B1C     		mov	r3, r7
+ 605 016c 1633     		add	r3, r3, #22
+ 606 016e 1B88     		ldrh	r3, [r3]
+ 607 0170 002B     		cmp	r3, #0
+ 608 0172 3AD0     		beq	.L17
+ 252:../Sources/functions.c ****    {
+ 253:../Sources/functions.c ****       r_start_address += r_size;          // new start address
+ 609              		.loc 1 253 0
+ 610 0174 3B1C     		mov	r3, r7
+ 611 0176 1E33     		add	r3, r3, #30
+ 612 0178 391C     		mov	r1, r7
+ 613 017a 1E31     		add	r1, r1, #30
+ 614 017c 3A1C     		mov	r2, r7
+ 615 017e 1C32     		add	r2, r2, #28
+ 616 0180 0988     		ldrh	r1, [r1]
+ 617 0182 1288     		ldrh	r2, [r2]
+ 618 0184 8A18     		add	r2, r1, r2
+ 619 0186 1A80     		strh	r2, [r3]
+ 254:../Sources/functions.c ****       r_command = r_start_address << 5;   // start address
+ 620              		.loc 1 254 0
+ 621 0188 3B1C     		mov	r3, r7
+ 622 018a 0E33     		add	r3, r3, #14
+ 623 018c 3A1C     		mov	r2, r7
+ 624 018e 1E32     		add	r2, r2, #30
+ 625 0190 1288     		ldrh	r2, [r2]
+ 626 0192 5201     		lsl	r2, r2, #5
+ 627 0194 1A80     		strh	r2, [r3]
+ 255:../Sources/functions.c ****       r_command += remainder_size;        // number of words to follow
+ 628              		.loc 1 255 0
+ 629 0196 3B1C     		mov	r3, r7
+ 630 0198 0E33     		add	r3, r3, #14
+ 631 019a 391C     		mov	r1, r7
+ 632 019c 0E31     		add	r1, r1, #14
+ 633 019e 3A1C     		mov	r2, r7
+ 634 01a0 1632     		add	r2, r2, #22
+ 635 01a2 0988     		ldrh	r1, [r1]
+ 636 01a4 1288     		ldrh	r2, [r2]
+ 637 01a6 8A18     		add	r2, r1, r2
+ 638 01a8 1A80     		strh	r2, [r3]
+ 256:../Sources/functions.c **** 
+ 257:../Sources/functions.c ****       send_16bit_SPI(r_command);          // sends address and number of words to be sent
+ 639              		.loc 1 257 0
+ 640 01aa 3B1C     		mov	r3, r7
+ 641 01ac 0E33     		add	r3, r3, #14
+ 642 01ae 1B88     		ldrh	r3, [r3]
+ 643 01b0 181C     		mov	r0, r3
+ 644 01b2 FFF7FEFF 		bl	send_16bit_SPI
+ 258:../Sources/functions.c **** 
+ 259:../Sources/functions.c ****       for(n = 0; n < remainder_size; n++) // downloads register configurations
+ 645              		.loc 1 259 0
+ 646 01b6 0023     		mov	r3, #0
+ 647 01b8 BB61     		str	r3, [r7, #24]
+ 648 01ba 10E0     		b	.L30
+ 649              	.L31:
+ 260:../Sources/functions.c ****       {
+ 261:../Sources/functions.c ****          r_data = *reg_ptr;               // retrieves data to be sent
+ 650              		.loc 1 261 0 discriminator 2
+ 651 01bc 3B1C     		mov	r3, r7
+ 652 01be 0C33     		add	r3, r3, #12
+ 653 01c0 3A69     		ldr	r2, [r7, #16]
+ 654 01c2 1288     		ldrh	r2, [r2]
+ 655 01c4 1A80     		strh	r2, [r3]
+ 262:../Sources/functions.c ****          send_16bit_SPI(r_data);          // sends data
+ 656              		.loc 1 262 0 discriminator 2
+ 657 01c6 3B1C     		mov	r3, r7
+ 658 01c8 0C33     		add	r3, r3, #12
+ 659 01ca 1B88     		ldrh	r3, [r3]
+ 660 01cc 181C     		mov	r0, r3
+ 661 01ce FFF7FEFF 		bl	send_16bit_SPI
+ 263:../Sources/functions.c ****          reg_ptr++;
+ 662              		.loc 1 263 0 discriminator 2
+ 663 01d2 3B69     		ldr	r3, [r7, #16]
+ 664 01d4 0233     		add	r3, r3, #2
+ 665 01d6 3B61     		str	r3, [r7, #16]
+ 259:../Sources/functions.c ****       for(n = 0; n < remainder_size; n++) // downloads register configurations
+ 666              		.loc 1 259 0 discriminator 2
+ 667 01d8 BB69     		ldr	r3, [r7, #24]
+ 668 01da 0133     		add	r3, r3, #1
+ 669 01dc BB61     		str	r3, [r7, #24]
+ 670              	.L30:
+ 259:../Sources/functions.c ****       for(n = 0; n < remainder_size; n++) // downloads register configurations
+ 671              		.loc 1 259 0 is_stmt 0 discriminator 1
+ 672 01de 3B1C     		mov	r3, r7
+ 673 01e0 1633     		add	r3, r3, #22
+ 674 01e2 1A88     		ldrh	r2, [r3]
+ 675 01e4 BB69     		ldr	r3, [r7, #24]
+ 676 01e6 9A42     		cmp	r2, r3
+ 677 01e8 E8DC     		bgt	.L31
+ 678              	.L17:
+ 264:../Sources/functions.c ****       }
+ 265:../Sources/functions.c ****    }
+ 266:../Sources/functions.c **** 
+ 267:../Sources/functions.c **** } // end download_register
+ 679              		.loc 1 267 0 is_stmt 1
+ 680 01ea BD46     		mov	sp, r7
+ 681 01ec 08B0     		add	sp, sp, #32
+ 682              		@ sp needed for prologue
+ 683 01ee 80BD     		pop	{r7, pc}
+ 684              	.L34:
+ 685              		.align	2
+ 686              	.L33:
+ 687 01f0 00000000 		.word	.L24
+ 688 01f4 00000000 		.word	MC33816_ch1_config
+ 689 01f8 00000000 		.word	MC33816_ch2_config
+ 690 01fc 00000000 		.word	MC33816_diag_config
+ 691 0200 00000000 		.word	MC33816_io_config
+ 692 0204 00000000 		.word	MC33816_main_config
+ 693 0208 E17F0000 		.word	32737
+ 694 020c 01390000 		.word	14593
+ 695 0210 00000000 		.word	MAX_SPI_MODE_A_TRANSFER_SIZE
+ 696              		.cfi_endproc
+ 697              	.LFE2:
+ 699              		.text
+ 700              	.Letext0:
+ 701              		.file 2 "../Sources/MC33816_LoadData.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 functions.c
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:22     .rodata.MAX_SPI_MODE_A_TRANSFER_SIZE:00000000 MAX_SPI_MODE_A_TRANSFER_SIZE
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:19     .rodata.MAX_SPI_MODE_A_TRANSFER_SIZE:00000000 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:29     .rodata.DELAY_FACTOR:00000000 DELAY_FACTOR
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:26     .rodata.DELAY_FACTOR:00000000 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:32     .text.delay:00000000 $t
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:37     .text.delay:00000000 delay
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:84     .text.delay:00000030 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:89     .text.download_RAM:00000000 $t
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:94     .text.download_RAM:00000000 download_RAM
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:337    .text.download_RAM:00000174 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:348    .text.download_register:00000000 $t
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:353    .text.download_register:00000000 download_register
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:408    .rodata.download_register:00000000 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\ccKxXDxr.s:687    .text.download_register:000001f0 $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.aba60cd3b17efbc2d56a1d9fc6f583a6
+                           .group:00000000 wm4.functions.h.43.2db76d1e4f85fdfb92f133b74bf2eabf
+
+UNDEFINED SYMBOLS
+send_16bit_SPI
+MC33816_code_RAM1
+MC33816_code_RAM2
+MC33816_data_RAM
+MC33816_ch1_config
+MC33816_ch2_config
+MC33816_diag_config
+MC33816_io_config
+MC33816_main_config

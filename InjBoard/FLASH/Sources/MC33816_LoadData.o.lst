@@ -1,0 +1,489 @@
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"MC33816_LoadData.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	MC33816_code_RAM1
+  18              		.section	.rodata.MC33816_code_RAM1,"a",%progbits
+  19              		.align	2
+  22              	MC33816_code_RAM1:
+  23 0000 AB96     		.short	-26965
+  24 0002 F019     		.short	6640
+  25 0004 0A52     		.short	21002
+  26 0006 6843     		.short	17256
+  27 0008 3F17     		.short	5951
+  28 000a 0B20     		.short	8203
+  29 000c F070     		.short	28912
+  30 000e 3382     		.short	-32205
+  31 0010 2EF8     		.short	-2002
+  32 0012 EB7D     		.short	32235
+  33 0014 458D     		.short	-29371
+  34 0016 17C5     		.short	-15081
+  35 0018 EEBF     		.short	-16402
+  36 001a 25E8     		.short	-6107
+  37 001c 538A     		.short	-30125
+  38 001e 14DE     		.short	-8684
+  39 0020 66FE     		.short	-410
+  40 0022 B6B2     		.short	-19786
+  41 0024 6153     		.short	21345
+  42 0026 58D2     		.short	-11688
+  43 0028 938D     		.short	-29293
+  44 002a 839C     		.short	-25469
+  45 002c 7880     		.short	-32648
+  46 002e 5DB9     		.short	-18083
+  47 0030 3128     		.short	10289
+  48 0032 5080     		.short	-32688
+  49 0034 91E1     		.short	-7791
+  50 0036 C116     		.short	5825
+  51 0038 6F80     		.short	-32657
+  52 003a 3F19     		.short	6463
+  53 003c 9C9E     		.short	-24932
+  54 003e 7E3B     		.short	15230
+  55 0040 3B5D     		.short	23867
+  56 0042 8FB5     		.short	-19057
+  57 0044 6F15     		.short	5487
+  58 0046 E882     		.short	-32024
+  59 0048 7782     		.short	-32137
+  60 004a 3F5F     		.short	24383
+  61 004c 782F     		.short	12152
+  62 004e 40E4     		.short	-7104
+  63 0050 777C     		.short	31863
+  64 0052 BF2A     		.short	10943
+  65 0054 0050     		.short	20480
+  66 0056 1A12     		.short	4634
+  67 0058 C416     		.short	5828
+  68 005a D82A     		.short	10968
+  69 005c A290     		.short	-28510
+  70 005e 9708     		.short	2199
+  71 0060 C1A4     		.short	-23359
+  72 0062 4479     		.short	31044
+  73 0064 4346     		.short	17987
+  74 0066 4A7D     		.short	32074
+  75 0068 5153     		.short	21329
+  76 006a 52F3     		.short	-3246
+  77 006c 7D41     		.short	16765
+  78 006e 606E     		.short	28256
+  79 0070 90CA     		.short	-13680
+  80 0072 0226     		.short	9730
+  81 0074 B2F5     		.short	-2638
+  82 0076 AB22     		.short	8875
+  83 0078 23CB     		.short	-13533
+  84 007a 5D6B     		.short	27485
+  85 007c DB2B     		.short	11227
+  86 007e A908     		.short	2217
+  87 0080 4910     		.short	4169
+  88 0082 2B83     		.short	-31957
+  89 0084 8A63     		.short	25482
+  90 0086 0957     		.short	22281
+  91 0088 900E     		.short	3728
+  92 008a 6E89     		.short	-30354
+  93 008c 9309     		.short	2451
+  94 008e E993     		.short	-27671
+  95 0090 288C     		.short	-29656
+  96 0092 7C89     		.short	-30340
+  97 0094 3255     		.short	21810
+  98 0096 AE66     		.short	26286
+  99 0098 4BAC     		.short	-21429
+ 100 009a D4E2     		.short	-7468
+ 101 009c 3BD2     		.short	-11717
+ 102 009e EB85     		.short	-31253
+ 103 00a0 09E7     		.short	-6391
+ 104 00a2 E532     		.short	13029
+ 105 00a4 E559     		.short	23013
+ 106 00a6 7478     		.short	30836
+ 107 00a8 12A8     		.short	-22510
+ 108 00aa 0EE1     		.short	-7922
+ 109 00ac 14FB     		.short	-1260
+ 110 00ae CF2B     		.short	11215
+ 111              		.global	MC33816_code_RAM2
+ 112              		.section	.rodata.MC33816_code_RAM2,"a",%progbits
+ 113              		.align	2
+ 116              	MC33816_code_RAM2:
+ 117 0000 AA96     		.short	-26966
+ 118 0002 9E1A     		.short	6814
+ 119 0004 F840     		.short	16632
+ 120 0006 C866     		.short	26312
+ 121 0008 1CC9     		.short	-14052
+ 122 000a 3EEC     		.short	-5058
+ 123 000c E583     		.short	-31771
+ 124 000e 8682     		.short	-32122
+ 125 0010 DCE3     		.short	-7204
+ 126 0012 F3C8     		.short	-14093
+ 127 0014 4197     		.short	-26815
+ 128 0016 37C4     		.short	-15305
+ 129 0018 7143     		.short	17265
+ 130 001a 87E9     		.short	-5753
+ 131 001c 0A8B     		.short	-29942
+ 132 001e 55DE     		.short	-8619
+ 133 0020 839A     		.short	-25981
+ 134 0022 8507     		.short	1925
+ 135 0024 1C81     		.short	-32484
+ 136 0026 ED3B     		.short	15341
+ 137 0028 5070     		.short	28752
+ 138 002a C328     		.short	10435
+ 139 002c 7E24     		.short	9342
+ 140 002e 729C     		.short	-25486
+ 141 0030 7152     		.short	21105
+ 142 0032 02B8     		.short	-18430
+ 143 0034 33ED     		.short	-4813
+ 144 0036 37F4     		.short	-3017
+ 145 0038 399B     		.short	-25799
+ 146 003a 6E4F     		.short	20334
+ 147 003c 9484     		.short	-31596
+ 148 003e B3EE     		.short	-4429
+ 149 0040 8D19     		.short	6541
+ 150 0042 8751     		.short	20871
+ 151 0044 CDE4     		.short	-6963
+ 152 0046 1E14     		.short	5150
+ 153 0048 DB30     		.short	12507
+ 154 004a 54A4     		.short	-23468
+ 155 004c 9FBB     		.short	-17505
+ 156 004e E216     		.short	5858
+ 157 0050 187D     		.short	32024
+ 158 0052 E12B     		.short	11233
+ 159 0054 B732     		.short	12983
+ 160 0056 B01E     		.short	7856
+ 161 0058 A017     		.short	6048
+ 162 005a 2192     		.short	-28127
+ 163              		.global	MC33816_data_RAM
+ 164              		.section	.rodata.MC33816_data_RAM,"a",%progbits
+ 165              		.align	2
+ 168              	MC33816_data_RAM:
+ 169 0000 BE00     		.short	190
+ 170 0002 C700     		.short	199
+ 171 0004 8D00     		.short	141
+ 172 0006 3C00     		.short	60
+ 173 0008 6009     		.short	2400
+ 174 000a B400     		.short	180
+ 175 000c 3C00     		.short	60
+ 176 000e 60EA     		.short	-5536
+ 177 0010 0000     		.short	0
+ 178 0012 0000     		.short	0
+ 179 0014 0000     		.short	0
+ 180 0016 0000     		.short	0
+ 181 0018 0000     		.short	0
+ 182 001a 0000     		.short	0
+ 183 001c 0000     		.short	0
+ 184 001e 0000     		.short	0
+ 185 0020 0000     		.short	0
+ 186 0022 0000     		.short	0
+ 187 0024 0000     		.short	0
+ 188 0026 0000     		.short	0
+ 189 0028 0000     		.short	0
+ 190 002a 0000     		.short	0
+ 191 002c 0000     		.short	0
+ 192 002e 0000     		.short	0
+ 193 0030 0000     		.short	0
+ 194 0032 0000     		.short	0
+ 195 0034 0000     		.short	0
+ 196 0036 0000     		.short	0
+ 197 0038 0000     		.short	0
+ 198 003a 0000     		.short	0
+ 199 003c 0000     		.short	0
+ 200 003e 0000     		.short	0
+ 201 0040 0000     		.short	0
+ 202 0042 0000     		.short	0
+ 203 0044 0000     		.short	0
+ 204 0046 0000     		.short	0
+ 205 0048 0000     		.short	0
+ 206 004a 0000     		.short	0
+ 207 004c 0000     		.short	0
+ 208 004e 0000     		.short	0
+ 209 0050 0000     		.short	0
+ 210 0052 0000     		.short	0
+ 211 0054 0000     		.short	0
+ 212 0056 0000     		.short	0
+ 213 0058 0000     		.short	0
+ 214 005a 0000     		.short	0
+ 215 005c 0000     		.short	0
+ 216 005e 0000     		.short	0
+ 217 0060 0000     		.short	0
+ 218 0062 0000     		.short	0
+ 219 0064 0000     		.short	0
+ 220 0066 0000     		.short	0
+ 221 0068 0000     		.short	0
+ 222 006a 0000     		.short	0
+ 223 006c 0000     		.short	0
+ 224 006e 0000     		.short	0
+ 225 0070 0000     		.short	0
+ 226 0072 0000     		.short	0
+ 227 0074 0000     		.short	0
+ 228 0076 0000     		.short	0
+ 229 0078 0000     		.short	0
+ 230 007a 0000     		.short	0
+ 231 007c 0000     		.short	0
+ 232 007e 0000     		.short	0
+ 233 0080 9E00     		.short	158
+ 234 0082 9B00     		.short	155
+ 235 0084 2F00     		.short	47
+ 236 0086 1D00     		.short	29
+ 237 0088 0000     		.short	0
+ 238 008a 7800     		.short	120
+ 239 008c 5A00     		.short	90
+ 240 008e 3C00     		.short	60
+ 241 0090 60EA     		.short	-5536
+ 242 0092 0000     		.short	0
+ 243 0094 0000     		.short	0
+ 244 0096 0000     		.short	0
+ 245 0098 0000     		.short	0
+ 246 009a 0000     		.short	0
+ 247 009c 0000     		.short	0
+ 248 009e 0000     		.short	0
+ 249 00a0 0000     		.short	0
+ 250 00a2 0000     		.short	0
+ 251 00a4 0000     		.short	0
+ 252 00a6 0000     		.short	0
+ 253 00a8 0000     		.short	0
+ 254 00aa 0000     		.short	0
+ 255 00ac 0000     		.short	0
+ 256 00ae 0000     		.short	0
+ 257 00b0 0000     		.short	0
+ 258 00b2 0000     		.short	0
+ 259 00b4 0000     		.short	0
+ 260 00b6 0000     		.short	0
+ 261 00b8 0000     		.short	0
+ 262 00ba 0000     		.short	0
+ 263 00bc 0000     		.short	0
+ 264 00be 0000     		.short	0
+ 265 00c0 0000     		.short	0
+ 266 00c2 0000     		.short	0
+ 267 00c4 0000     		.short	0
+ 268 00c6 0000     		.short	0
+ 269 00c8 0000     		.short	0
+ 270 00ca 0000     		.short	0
+ 271 00cc 0000     		.short	0
+ 272 00ce 0000     		.short	0
+ 273 00d0 0000     		.short	0
+ 274 00d2 0000     		.short	0
+ 275 00d4 0000     		.short	0
+ 276 00d6 0000     		.short	0
+ 277 00d8 0000     		.short	0
+ 278 00da 0000     		.short	0
+ 279 00dc 0000     		.short	0
+ 280 00de 0000     		.short	0
+ 281 00e0 0000     		.short	0
+ 282 00e2 0000     		.short	0
+ 283 00e4 0000     		.short	0
+ 284 00e6 0000     		.short	0
+ 285 00e8 0000     		.short	0
+ 286 00ea 0000     		.short	0
+ 287 00ec 0000     		.short	0
+ 288 00ee 0000     		.short	0
+ 289 00f0 0000     		.short	0
+ 290 00f2 0000     		.short	0
+ 291 00f4 0000     		.short	0
+ 292 00f6 0000     		.short	0
+ 293 00f8 0000     		.short	0
+ 294 00fa 0000     		.short	0
+ 295 00fc 0000     		.short	0
+ 296 00fe 0000     		.short	0
+ 297              		.global	MC33816_main_config
+ 298              		.section	.rodata.MC33816_main_config,"a",%progbits
+ 299              		.align	2
+ 302              	MC33816_main_config:
+ 303 0000 0300     		.short	3
+ 304 0002 FC1F     		.short	8188
+ 305 0004 0000     		.short	0
+ 306 0006 0012     		.short	4608
+ 307 0008 0000     		.short	0
+ 308 000a 0000     		.short	0
+ 309 000c 0100     		.short	1
+ 310 000e 0000     		.short	0
+ 311 0010 0F00     		.short	15
+ 312 0012 0000     		.short	0
+ 313 0014 0000     		.short	0
+ 314 0016 0000     		.short	0
+ 315 0018 0000     		.short	0
+ 316 001a 0000     		.short	0
+ 317 001c 0000     		.short	0
+ 318 001e 0000     		.short	0
+ 319 0020 0000     		.short	0
+ 320 0022 0000     		.short	0
+ 321 0024 0000     		.short	0
+ 322 0026 0000     		.short	0
+ 323 0028 0000     		.short	0
+ 324 002a 0000     		.short	0
+ 325 002c 0000     		.short	0
+ 326 002e 0000     		.short	0
+ 327 0030 0000     		.short	0
+ 328 0032 0000     		.short	0
+ 329 0034 0000     		.short	0
+ 330 0036 0000     		.short	0
+ 331 0038 0000     		.short	0
+ 332              		.global	MC33816_ch1_config
+ 333 003a 0000     		.section	.rodata.MC33816_ch1_config,"a",%progbits
+ 334              		.align	2
+ 337              	MC33816_ch1_config:
+ 338 0000 1800     		.short	24
+ 339 0002 0000     		.short	0
+ 340 0004 0000     		.short	0
+ 341 0006 0000     		.short	0
+ 342 0008 0303     		.short	771
+ 343 000a 0000     		.short	0
+ 344 000c 0000     		.short	0
+ 345 000e 5800     		.short	88
+ 346 0010 F378     		.short	30963
+ 347 0012 6464     		.short	25700
+ 348 0014 0000     		.short	0
+ 349 0016 2C00     		.short	44
+ 350 0018 0000     		.short	0
+ 351 001a 0000     		.short	0
+ 352 001c 0000     		.short	0
+ 353 001e 0000     		.short	0
+ 354 0020 0000     		.short	0
+ 355 0022 0000     		.short	0
+ 356 0024 0000     		.short	0
+ 357              		.global	MC33816_ch2_config
+ 358 0026 0000     		.section	.rodata.MC33816_ch2_config,"a",%progbits
+ 359              		.align	2
+ 362              	MC33816_ch2_config:
+ 363 0000 1800     		.short	24
+ 364 0002 0000     		.short	0
+ 365 0004 0000     		.short	0
+ 366 0006 0000     		.short	0
+ 367 0008 000C     		.short	3072
+ 368 000a 0000     		.short	0
+ 369 000c 0000     		.short	0
+ 370 000e 2E00     		.short	46
+ 371 0010 AE0C     		.short	3246
+ 372 0012 17E8     		.short	-6121
+ 373 0014 0000     		.short	0
+ 374 0016 1400     		.short	20
+ 375 0018 0000     		.short	0
+ 376 001a 0000     		.short	0
+ 377 001c 0000     		.short	0
+ 378 001e 0000     		.short	0
+ 379 0020 0000     		.short	0
+ 380 0022 0000     		.short	0
+ 381 0024 0000     		.short	0
+ 382              		.global	MC33816_io_config
+ 383 0026 0000     		.section	.rodata.MC33816_io_config,"a",%progbits
+ 384              		.align	2
+ 387              	MC33816_io_config:
+ 388 0000 0000     		.short	0
+ 389 0002 0000     		.short	0
+ 390 0004 0000     		.short	0
+ 391 0006 0000     		.short	0
+ 392 0008 6300     		.short	99
+ 393 000a 8C01     		.short	396
+ 394 000c 0008     		.short	2048
+ 395 000e 1006     		.short	1552
+ 396 0010 4100     		.short	65
+ 397 0012 9800     		.short	152
+ 398 0014 0800     		.short	8
+ 399 0016 0800     		.short	8
+ 400 0018 0000     		.short	0
+ 401 001a 0000     		.short	0
+ 402 001c 0000     		.short	0
+ 403 001e 0000     		.short	0
+ 404 0020 0000     		.short	0
+ 405 0022 0000     		.short	0
+ 406 0024 0000     		.short	0
+ 407 0026 0000     		.short	0
+ 408 0028 0000     		.short	0
+ 409 002a 0000     		.short	0
+ 410 002c 0000     		.short	0
+ 411 002e 0000     		.short	0
+ 412 0030 4100     		.short	65
+ 413 0032 4100     		.short	65
+ 414 0034 4100     		.short	65
+ 415 0036 9C00     		.short	156
+ 416 0038 0400     		.short	4
+ 417 003a 0010     		.short	4096
+ 418 003c 0000     		.short	0
+ 419 003e 0000     		.short	0
+ 420 0040 0000     		.short	0
+ 421 0042 0000     		.short	0
+ 422 0044 0000     		.short	0
+ 423 0046 0000     		.short	0
+ 424 0048 0000     		.short	0
+ 425 004a 0000     		.short	0
+ 426 004c 7F7F     		.short	32639
+ 427 004e 7F7F     		.short	32639
+ 428 0050 7F00     		.short	127
+ 429 0052 0000     		.short	0
+ 430 0054 0000     		.short	0
+ 431 0056 0000     		.short	0
+ 432              		.global	MC33816_diag_config
+ 433              		.section	.rodata.MC33816_diag_config,"a",%progbits
+ 434              		.align	2
+ 437              	MC33816_diag_config:
+ 438 0000 0000     		.short	0
+ 439 0002 0000     		.short	0
+ 440 0004 1E00     		.short	30
+ 441 0006 0000     		.short	0
+ 442 0008 0000     		.short	0
+ 443 000a 1E00     		.short	30
+ 444 000c 0000     		.short	0
+ 445 000e 0000     		.short	0
+ 446 0010 1E00     		.short	30
+ 447 0012 0000     		.short	0
+ 448 0014 0000     		.short	0
+ 449 0016 1E00     		.short	30
+ 450 0018 0000     		.short	0
+ 451 001a 0000     		.short	0
+ 452 001c 1E00     		.short	30
+ 453 001e 0000     		.short	0
+ 454 0020 0000     		.short	0
+ 455 0022 1E00     		.short	30
+ 456 0024 1E00     		.short	30
+ 457 0026 0000     		.short	0
+ 458 0028 0000     		.short	0
+ 459 002a 1E00     		.short	30
+ 460 002c 0000     		.short	0
+ 461 002e 0000     		.short	0
+ 462 0030 1E00     		.short	30
+ 463 0032 0000     		.short	0
+ 464 0034 0000     		.short	0
+ 465 0036 1E00     		.short	30
+ 466 0038 0000     		.short	0
+ 467 003a 0000     		.short	0
+ 468 003c 1E00     		.short	30
+ 469 003e 0000     		.short	0
+ 470 0040 0000     		.short	0
+ 471 0042 1E00     		.short	30
+ 472 0044 0000     		.short	0
+ 473 0046 0000     		.short	0
+ 474 0048 0000     		.short	0
+ 475 004a 0000     		.short	0
+ 476 004c 0000     		.short	0
+ 477 004e 0000     		.short	0
+ 478 0050 0000     		.short	0
+ 479 0052 0000     		.short	0
+ 480 0054 0000     		.short	0
+ 481 0056 0100     		.short	1
+ 482              		.text
+ 483              	.Letext0:
+ 484              		.file 1 "../Sources/MC33816_LoadData.c"
+DEFINED SYMBOLS
+                            *ABS*:00000000 MC33816_LoadData.c
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:22     .rodata.MC33816_code_RAM1:00000000 MC33816_code_RAM1
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:19     .rodata.MC33816_code_RAM1:00000000 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:116    .rodata.MC33816_code_RAM2:00000000 MC33816_code_RAM2
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:113    .rodata.MC33816_code_RAM2:00000000 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:168    .rodata.MC33816_data_RAM:00000000 MC33816_data_RAM
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:165    .rodata.MC33816_data_RAM:00000000 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:302    .rodata.MC33816_main_config:00000000 MC33816_main_config
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:299    .rodata.MC33816_main_config:00000000 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:337    .rodata.MC33816_ch1_config:00000000 MC33816_ch1_config
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:334    .rodata.MC33816_ch1_config:00000000 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:362    .rodata.MC33816_ch2_config:00000000 MC33816_ch2_config
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:359    .rodata.MC33816_ch2_config:00000000 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:387    .rodata.MC33816_io_config:00000000 MC33816_io_config
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:384    .rodata.MC33816_io_config:00000000 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:437    .rodata.MC33816_diag_config:00000000 MC33816_diag_config
+C:\Users\SAE_LP1\AppData\Local\Temp\cc2do6Mu.s:434    .rodata.MC33816_diag_config:00000000 $d
+                           .group:00000000 wm4.1.aba60cd3b17efbc2d56a1d9fc6f583a6
+
+NO UNDEFINED SYMBOLS

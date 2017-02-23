@@ -1,0 +1,115 @@
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"Vectors.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	__vect_table
+  18              		.section	.vectortable,"a",%progbits
+  19              		.align	2
+  22              	__vect_table:
+  23 0000 00000000 		.word	__SP_INIT
+  24 0004 00000000 		.word	__thumb_startup
+  25 0008 00000000 		.word	Cpu_INT_NMIInterrupt
+  26 000c 00000000 		.word	Cpu_Interrupt
+  27 0010 00000000 		.word	Cpu_Interrupt
+  28 0014 00000000 		.word	Cpu_Interrupt
+  29 0018 00000000 		.word	Cpu_Interrupt
+  30 001c 00000000 		.word	Cpu_Interrupt
+  31 0020 00000000 		.word	Cpu_Interrupt
+  32 0024 00000000 		.word	Cpu_Interrupt
+  33 0028 00000000 		.word	Cpu_Interrupt
+  34 002c 00000000 		.word	Cpu_Interrupt
+  35 0030 00000000 		.word	Cpu_Interrupt
+  36 0034 00000000 		.word	Cpu_Interrupt
+  37 0038 00000000 		.word	Cpu_Interrupt
+  38 003c 00000000 		.word	Cpu_Interrupt
+  39 0040 00000000 		.word	Cpu_Interrupt
+  40 0044 00000000 		.word	Cpu_Interrupt
+  41 0048 00000000 		.word	Cpu_Interrupt
+  42 004c 00000000 		.word	Cpu_Interrupt
+  43 0050 00000000 		.word	Cpu_Interrupt
+  44 0054 00000000 		.word	Cpu_Interrupt
+  45 0058 00000000 		.word	Cpu_Interrupt
+  46 005c 00000000 		.word	Cpu_Interrupt
+  47 0060 00000000 		.word	Cpu_Interrupt
+  48 0064 00000000 		.word	Cpu_Interrupt
+  49 0068 00000000 		.word	Cpu_Interrupt
+  50 006c 00000000 		.word	Cpu_Interrupt
+  51 0070 00000000 		.word	Cpu_Interrupt
+  52 0074 00000000 		.word	Cpu_Interrupt
+  53 0078 00000000 		.word	Cpu_Interrupt
+  54 007c 00000000 		.word	Cpu_Interrupt
+  55 0080 00000000 		.word	Cpu_Interrupt
+  56 0084 00000000 		.word	Cpu_Interrupt
+  57 0088 00000000 		.word	Cpu_Interrupt
+  58 008c 00000000 		.word	Cpu_Interrupt
+  59 0090 00000000 		.word	Cpu_Interrupt
+  60 0094 00000000 		.word	Cpu_Interrupt
+  61 0098 00000000 		.word	Cpu_Interrupt
+  62 009c 00000000 		.word	Cpu_Interrupt
+  63 00a0 00000000 		.word	Cpu_Interrupt
+  64 00a4 00000000 		.word	Cpu_Interrupt
+  65 00a8 00000000 		.word	Cpu_Interrupt
+  66 00ac 00000000 		.word	Cpu_Interrupt
+  67 00b0 00000000 		.word	Cpu_Interrupt
+  68 00b4 00000000 		.word	Cpu_Interrupt
+  69 00b8 00000000 		.word	Cpu_Interrupt
+  70 00bc 00000000 		.word	Cpu_Interrupt
+  71              		.text
+  72              	.Letext0:
+  73              		.file 1 "C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+  74              		.file 2 "../Generated_Code/Cpu.h"
+  75              		.file 3 "../Generated_Code/Vectors.c"
+DEFINED SYMBOLS
+                            *ABS*:00000000 Vectors.c
+C:\Users\SAE_LP1\AppData\Local\Temp\ccCb01Qn.s:22     .vectortable:00000000 __vect_table
+C:\Users\SAE_LP1\AppData\Local\Temp\ccCb01Qn.s:19     .vectortable:00000000 $d
+                           .group:00000000 wm4.1.aba60cd3b17efbc2d56a1d9fc6f583a6
+                           .group:00000000 wm4.ewl_c_version.h.9.0bcb57d6a3f89baae1f9b121de2772f5
+                           .group:00000000 wm4.os_enum.h.9.03d7426d632bb1a35ec1708754c41daf
+                           .group:00000000 wm4.ansi_prefix.ARM.h.13.2dd306b0ccbe86124098bfe3a0b58d88
+                           .group:00000000 wm4.ansi_parms.h.64.05090287ebda70c0d79c02b050dca090
+                           .group:00000000 wm4.limits_api.h.9.bc6daa20b3abae2bba6c512044e73b43
+                           .group:00000000 wm4.ewl_lib_ext1.h.14.f9b057cc049671136093886db2a3473f
+                           .group:00000000 wm4.cstdint.137.268b37259d2d366c21376cbd280e10d7
+                           .group:00000000 wm4.PE_Types.h.69.0f70e9553c29a787d42fe2ac9dbd945d
+                           .group:00000000 wm4.PE_Error.h.60.6ccf96637e85421388d147a5dcbc3621
+                           .group:00000000 wm4.PE_Const.h.61.443ca05468cb0c6bf080e06394e39146
+                           .group:00000000 wm4.MKL25Z4.h.61.adbdc31ae5ef570825ab0667cccdf447
+                           .group:00000000 wm4.Cpu.h.78.e1dd9945a5e7ab9c31a38ba183a322df
+                           .group:00000000 wm4.size_t.h.9.f983491a73b5c81f421ee8223b1ac5c0
+                           .group:00000000 wm4.ewl_rsize_t.h.11.b283831bb803e76ceb1756da2df9a1b5
+                           .group:00000000 wm4.cstddef.32.067e2ea187472b6198f9ace951e27a51
+                           .group:00000000 wm4.va_list.h.9.b0bb078841c0305c2667a31da10a9070
+                           .group:00000000 wm4.file_struc.h.13.79700b909bfbc91e5b3cffa0100f62cf
+                           .group:00000000 wm4.stdarg.ARM.h.9.32516e68edcca81ab31f48f233894821
+                           .group:00000000 wm4.stdio_api.h.71.3b2f2f9a22fa2b89114b19a43e47537d
+                           .group:00000000 wm4.cstdio.1186.6c7f5c80aaa542dbe41dde866b3043d9
+                           .group:00000000 wm4.IO1.h.110.f91ec9d4f1f664c788709811298054d8
+                           .group:00000000 wm4.PDD_Types.h.5.e0b4125fe5201c5e1f688b067f4f0d54
+                           .group:00000000 wm4.GPIO_PDD.h.122.b35a34a6eaffa5c552aafe5692260473
+                           .group:00000000 wm4.PORT_PDD.h.9.e24435d4c3cbcc67beceb9e359966485
+                           .group:00000000 wm4.GPIO1.h.124.b7ee380ef904b55819a5c75398eefb42
+                           .group:00000000 wm4.TPM_PDD.h.9.31a1556de00afefbac847df3173403c0
+                           .group:00000000 wm4.TU1.h.131.b88ff748c6c68c5a4fb5a26e2d236fa3
+                           .group:00000000 wm4.PWM1.h.115.680dc27522312ce22703fe373ae9c8c9
+                           .group:00000000 wm4.LEDRed.h.81.c201eeb213f541d934eae6e245311c3d
+                           .group:00000000 wm4.LEDGreen.h.82.6bfe1b791f43b4324e0dea73e093527e
+                           .group:00000000 wm4.CSBit.h.82.ff7132ae69077fd0e7e8f415499ed4b0
+
+UNDEFINED SYMBOLS
+__SP_INIT
+__thumb_startup
+Cpu_INT_NMIInterrupt
+Cpu_Interrupt

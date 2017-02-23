@@ -1,0 +1,20 @@
+-mcpu=cortex-m0
+-mthumb
+-mfloat-abi=soft
+-g3
+-gdwarf-2
+-nostdinc
+-I"C:/Users/SAE_LP1/workspace/InjBoard/Project_Headers"
+-I"C:/Users/SAE_LP1/workspace/InjBoard/Project_Settings/Startup_Code"
+-I"C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include"
+-I"C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/EWL_Runtime/include"
+-I"C:/Users/SAE_LP1/workspace/InjBoard/Generated_Code"
+-I"C:/Users/SAE_LP1/workspace/InjBoard/Sources"
+-I"C:/Freescale/CW MCU v10.7/MCU/ProcessorExpert/lib/Kinetis/iofiles"
+-I"C:/Freescale/CW MCU v10.7/MCU/ProcessorExpert/lib/Kinetis/pdd/inc"
+-O0
+-ffunction-sections
+-fdata-sections
+-Wall
+-c
+-fmessage-length=0

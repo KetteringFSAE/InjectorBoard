@@ -1,0 +1,86 @@
+<CodeGenerationInfo>
+  <ToolchainSettings>
+    <option>
+      <name>PE_G_4PEx_ToolChain_Compiler_SearchUserPaths</name>
+      <values lines_count="4">
+        <Line>"${ProcessorExpertPath}/lib/Kinetis/pdd/inc"</Line>
+        <Line>"${ProcessorExpertPath}/lib/Kinetis/iofiles"</Line>
+        <Line>"${ProjDirPath}/Sources"</Line>
+        <Line>"${ProjDirPath}/Generated_Code"</Line>
+      </values>
+    </option>
+  </ToolchainSettings>
+  <GeneratedFilesList>
+    <GeneratedByPE>
+      <File Name="Generated_Code/Vectors.c" FileDate="2017-02-22, 22:49:35" FileAge="1487821775733" FileType="45637" CompNumb="19" />
+      <File Name="Documentation/ProcessorExpert_Settings.xml" FileDate="2017-02-22, 22:49:35" FileAge="1487821775828" FileType="3072" />
+      <File Name="Generated_Code/PDD/SysTick_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/PE_Const.h" FileDate="2017-02-04, 20:44:34" FileAge="1486259074182" FileType="45637" />
+      <File Name="Generated_Code/PDD/CMP_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/PDD/UART_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Documentation/doxygen/ProcessorExpert.txt" FileDate="2017-02-22, 22:49:35" FileAge="1487821775725" FileType="45637" CompNumb="19" />
+      <File Name="Documentation/doxygen/LEDRed.txt" FileDate="2017-02-22, 20:41:04" FileAge="1487814064399" FileType="45637" CompNumb="51" />
+      <File Name="Generated_Code/PDD/UART0_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/PDD/DMA_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/PDD/SPI_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/PDD/SIM_PDD.h" FileDate="2014-05-14, 13:09:28" FileAge="1400087368000" FileType="262144" />
+      <File Name="Generated_Code/PDD/ADC_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/PDD/DAC_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Project_Settings/Debugger/MKL25Z128.mem" FileDate="2013-04-18, 01:55:42" FileAge="1366264542000" FileType="45637" CompNumb="19" />
+      <File Name="Generated_Code/LEDRed.h" FileDate="2017-02-22, 20:41:04" FileAge="1487814064447" FileType="45637" CompNumb="51" />
+      <File Name="Documentation/ProcessorExpert.txt" FileDate="2017-02-22, 22:49:38" FileAge="1487821778437" FileType="3072" />
+      <File Name="Generated_Code/LEDRed.c" FileDate="2017-02-22, 20:41:04" FileAge="1487814064468" FileType="45637" CompNumb="51" />
+      <File Name="Generated_Code/PWM1.h" FileDate="2017-02-22, 20:38:46" FileAge="1487813926018" FileType="45637" CompNumb="49" />
+      <File Name="Generated_Code/PWM1.c" FileDate="2017-02-22, 20:38:46" FileAge="1487813926014" FileType="45637" CompNumb="49" />
+      <File Name="Generated_Code/PDD/LPTMR_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/GPIO1.h" FileDate="2017-02-08, 21:29:58" FileAge="1486607398341" FileType="45637" CompNumb="28" />
+      <File Name="Generated_Code/PDD/GPIO_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/GPIO1.c" FileDate="2017-02-08, 21:29:58" FileAge="1486607398338" FileType="45637" CompNumb="28" />
+      <File Name="Generated_Code/PE_Error.h" FileDate="2017-02-04, 20:44:34" FileAge="1486259074183" FileType="45637" />
+      <File Name="ProjectInfo.xml" FileDate="2017-02-22, 22:49:38" FileAge="1487821778430" FileType="45637" />
+      <File Name="Documentation/doxygen/PWM1.txt" FileDate="2017-02-22, 20:38:46" FileAge="1487813926009" FileType="45637" CompNumb="49" />
+      <File Name="Generated_Code/PDD/PIT_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/PE_LDD.h" FileDate="2017-02-22, 22:49:35" FileAge="1487821775730" FileType="45637" CompNumb="19" />
+      <File Name="Generated_Code/PE_LDD.c" FileDate="2017-02-22, 22:49:35" FileAge="1487821775728" FileType="45637" CompNumb="19" />
+      <File Name="Generated_Code/CsIO1.h" FileDate="2017-02-04, 20:44:34" FileAge="1486259074187" FileType="45637" CompNumb="11" />
+      <File Name="Documentation/ProcessorExpert_SIGNALS.txt" FileDate="2017-02-22, 22:49:35" FileAge="1487821775751" FileType="3072" />
+      <File Name="Generated_Code/LEDGreen.h" FileDate="2017-02-22, 20:41:04" FileAge="1487814064524" FileType="45637" CompNumb="52" />
+      <File Name="Generated_Code/CsIO1.c" FileDate="2017-02-04, 20:44:34" FileAge="1486259074186" FileType="45637" CompNumb="11" />
+      <File Name="Generated_Code/LEDGreen.c" FileDate="2017-02-22, 20:41:04" FileAge="1487814064604" FileType="45637" CompNumb="52" />
+      <File Name="Generated_Code/CSBit.h" FileDate="2017-02-22, 22:49:35" FileAge="1487821775676" FileType="45637" CompNumb="57" />
+      <File Name="Generated_Code/PDD/I2C_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/IO1.h" FileDate="2017-02-10, 23:21:35" FileAge="1486786895333" FileType="45637" CompNumb="12" />
+      <File Name="Generated_Code/CSBit.c" FileDate="2017-02-22, 22:49:35" FileAge="1487821775674" FileType="45637" CompNumb="57" />
+      <File Name="Generated_Code/PDD/MCM_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/PDD/RTC_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Sources/ProcessorExpert.c" FileDate="2017-02-22, 22:49:35" FileAge="1487821775718" FileType="128" />
+      <File Name="Generated_Code/Cpu.h" FileDate="2017-02-04, 20:44:34" FileAge="1486259074180" FileType="45637" CompNumb="19" />
+      <File Name="Generated_Code/IO1.c" FileDate="2017-02-10, 23:21:35" FileAge="1486786895337" FileType="45637" CompNumb="12" />
+      <File Name="Generated_Code/PDD/DMAMUX_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Documentation/doxygen/GPIO1.txt" FileDate="2017-02-08, 21:29:58" FileAge="1486607398335" FileType="45637" CompNumb="28" />
+      <File Name="Generated_Code/Cpu.c" FileDate="2017-02-22, 22:49:35" FileAge="1487821775721" FileType="45637" CompNumb="19" />
+      <File Name="Generated_Code/TU1.h" FileDate="2017-02-22, 20:38:46" FileAge="1487813926030" FileType="45637" CompNumb="50" />
+      <File Name="Documentation/doxygen/LEDGreen.txt" FileDate="2017-02-22, 20:41:04" FileAge="1487814064392" FileType="45637" CompNumb="52" />
+      <File Name="Documentation/doxygen/TU1.txt" FileDate="2017-02-22, 20:38:46" FileAge="1487813926023" FileType="45637" CompNumb="50" />
+      <File Name="Generated_Code/TU1.c" FileDate="2017-02-22, 20:38:46" FileAge="1487813926027" FileType="45637" CompNumb="50" />
+      <File Name="Project_Settings/Linker_Files/ProcessorExpert.ld" FileDate="2017-02-04, 20:44:34" FileAge="1486259074203" FileType="8" CompNumb="19" />
+      <File Name="Generated_Code/IO_Map.h" FileDate="2017-02-04, 20:44:34" FileAge="1486259074181" FileType="45637" />
+      <File Name="Generated_Code/IO_Map/MKL25Z4.h" FileDate="2013-04-18, 01:55:42" FileAge="1366264542000" FileType="262144" />
+      <File Name="Generated_Code/PDD/USB_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Documentation/doxygen/RoutingReport.txt" FileDate="2017-02-04, 20:44:34" FileAge="1486259074176" FileType="45637" CompNumb="19" />
+      <File Name="Documentation/doxygen/IO1.txt" FileDate="2017-02-10, 23:21:35" FileAge="1486786895339" FileType="45637" CompNumb="12" />
+      <File Name="Generated_Code/PDD/FTFA_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Documentation/doxygen/CSBit.txt" FileDate="2017-02-22, 22:49:35" FileAge="1487821775672" FileType="45637" CompNumb="57" />
+      <File Name="Sources/Events.h" FileDate="2017-02-22, 22:49:35" FileAge="1487821775737" FileType="131328" />
+      <File Name="Generated_Code/PDD/PDD_Types.h" FileDate="2013-04-18, 01:55:42" FileAge="1366264542000" FileType="262144" />
+      <File Name="Sources/Events.c" FileDate="2017-02-22, 22:05:09" FileAge="1487819109879" FileType="131328" />
+      <File Name="Generated_Code/PE_Types.h" FileDate="2017-02-22, 22:49:35" FileAge="1487821775716" FileType="45637" />
+      <File Name="Documentation/doxygen/pex.css" FileDate="2017-02-04, 20:44:34" FileAge="1486259074026" FileType="16384" CompNumb="19" />
+      <File Name="Generated_Code/PDD/TPM_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/PDD/COP_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Generated_Code/PDD/PORT_PDD.h" FileDate="2014-02-20, 14:18:46" FileAge="1392923926000" FileType="262144" />
+      <File Name="Documentation/doxygen/pex.doxyfile" FileDate="2017-02-04, 20:44:34" FileAge="1486259074175" FileType="45637" CompNumb="19" />
+    </GeneratedByPE>
+  </GeneratedFilesList>
+  <CodeGenReference>30</CodeGenReference>
+</CodeGenerationInfo>

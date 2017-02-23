@@ -1,0 +1,1015 @@
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"ProcessorExpert.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.comm	Data_GPIO,4,4
+  18              		.comm	Data_CS,4,4
+  19              		.comm	Data_LEDRed,4,4
+  20              		.comm	Data_LEDGreen,4,4
+  21              		.comm	Data_PWM,4,4
+  22              		.section	.text.delaySmall,"ax",%progbits
+  23              		.align	2
+  24              		.global	delaySmall
+  25              		.code	16
+  26              		.thumb_func
+  28              	delaySmall:
+  29              	.LFB0:
+  30              		.file 1 "../Sources/ProcessorExpert.c"
+   1:../Sources/ProcessorExpert.c **** /** ###################################################################
+   2:../Sources/ProcessorExpert.c **** **     Filename    : ProcessorExpert.c
+   3:../Sources/ProcessorExpert.c **** **     Project     : ProcessorExpert
+   4:../Sources/ProcessorExpert.c **** **     Processor   : MKL25Z128VLK4
+   5:../Sources/ProcessorExpert.c **** **     Version     : Driver 01.01
+   6:../Sources/ProcessorExpert.c **** **     Compiler    : GNU C Compiler
+   7:../Sources/ProcessorExpert.c **** **     Date/Time   : 2012-08-03, 12:30, # CodeGen: 0
+   8:../Sources/ProcessorExpert.c **** **     Abstract    :
+   9:../Sources/ProcessorExpert.c **** **         Main module.
+  10:../Sources/ProcessorExpert.c **** **         This module contains user's application code.
+  11:../Sources/ProcessorExpert.c **** **     Settings    :
+  12:../Sources/ProcessorExpert.c **** **     Contents    :
+  13:../Sources/ProcessorExpert.c **** **         No public methods
+  14:../Sources/ProcessorExpert.c **** **
+  15:../Sources/ProcessorExpert.c **** ** ###################################################################*/
+  16:../Sources/ProcessorExpert.c **** /* MODULE ProcessorExpert */
+  17:../Sources/ProcessorExpert.c **** 
+  18:../Sources/ProcessorExpert.c **** 
+  19:../Sources/ProcessorExpert.c **** /* Including needed modules to compile this module/procedure */
+  20:../Sources/ProcessorExpert.c **** #include "Cpu.h"
+  21:../Sources/ProcessorExpert.c **** #include "Events.h"
+  22:../Sources/ProcessorExpert.c **** #include "CsIO1.h"
+  23:../Sources/ProcessorExpert.c **** #include "IO1.h"
+  24:../Sources/ProcessorExpert.c **** #include "PWM1.h"
+  25:../Sources/ProcessorExpert.c **** #include "TU1.h"
+  26:../Sources/ProcessorExpert.c **** #include "LEDRed.h"
+  27:../Sources/ProcessorExpert.c **** #include "LEDGreen.h"
+  28:../Sources/ProcessorExpert.c **** #include "CSBit.h"
+  29:../Sources/ProcessorExpert.c **** #include "GPIO1.h"
+  30:../Sources/ProcessorExpert.c **** /* Including shared modules, which are used for whole project */
+  31:../Sources/ProcessorExpert.c **** #include "PE_Types.h"
+  32:../Sources/ProcessorExpert.c **** #include "PE_Error.h"
+  33:../Sources/ProcessorExpert.c **** #include "PE_Const.h"
+  34:../Sources/ProcessorExpert.c **** #include "IO_Map.h"
+  35:../Sources/ProcessorExpert.c **** 
+  36:../Sources/ProcessorExpert.c **** /* User includes (#include below this line is not maintained by Processor Expert) */
+  37:../Sources/ProcessorExpert.c **** #include "Common.h"
+  38:../Sources/ProcessorExpert.c **** #include <stdio.h>
+  39:../Sources/ProcessorExpert.c **** #include <string.h>
+  40:../Sources/ProcessorExpert.c **** #include <cstdlib>
+  41:../Sources/ProcessorExpert.c **** #include "functions.h"
+  42:../Sources/ProcessorExpert.c **** 
+  43:../Sources/ProcessorExpert.c **** 
+  44:../Sources/ProcessorExpert.c **** //#define SPI0_D (uint8_t*)(SPI_BASE + 0x05)
+  45:../Sources/ProcessorExpert.c **** 
+  46:../Sources/ProcessorExpert.c **** LDD_TDeviceData *Data_GPIO;
+  47:../Sources/ProcessorExpert.c **** //LDD_TDeviceData *Data_SPI;
+  48:../Sources/ProcessorExpert.c **** LDD_TDeviceData *Data_CS;
+  49:../Sources/ProcessorExpert.c **** LDD_TDeviceData *Data_LEDRed;
+  50:../Sources/ProcessorExpert.c **** LDD_TDeviceData *Data_LEDGreen;
+  51:../Sources/ProcessorExpert.c **** LDD_TDeviceData *Data_PWM;
+  52:../Sources/ProcessorExpert.c **** 
+  53:../Sources/ProcessorExpert.c **** //********************************************************************************
+  54:../Sources/ProcessorExpert.c **** //   Function Name   : send_16bit_SPI
+  55:../Sources/ProcessorExpert.c **** //   Engineer        : 
+  56:../Sources/ProcessorExpert.c **** //   Date            : 
+  57:../Sources/ProcessorExpert.c **** //   Parameters      : NONE
+  58:../Sources/ProcessorExpert.c **** //   Returns         : NONE
+  59:../Sources/ProcessorExpert.c **** //   Notes           : NONE
+  60:../Sources/ProcessorExpert.c **** //********************************************************************************
+  61:../Sources/ProcessorExpert.c **** 
+  62:../Sources/ProcessorExpert.c **** 
+  63:../Sources/ProcessorExpert.c **** void delaySmall()
+  64:../Sources/ProcessorExpert.c **** {
+  31              		.loc 1 64 0
+  32              		.cfi_startproc
+  33 0000 80B5     		push	{r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 7, -8
+  37              		.cfi_offset 14, -4
+  38 0002 82B0     		sub	sp, sp, #8
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 16
+  41 0004 00AF     		add	r7, sp, #0
+  42              	.LCFI2:
+  43              		.cfi_def_cfa_register 7
+  65:../Sources/ProcessorExpert.c **** 	volatile int i = 0;
+  44              		.loc 1 65 0
+  45 0006 0023     		mov	r3, #0
+  46 0008 7B60     		str	r3, [r7, #4]
+  66:../Sources/ProcessorExpert.c **** 	for(i = 0; i < 55; i++);
+  47              		.loc 1 66 0
+  48 000a 0023     		mov	r3, #0
+  49 000c 7B60     		str	r3, [r7, #4]
+  50 000e 02E0     		b	.L2
+  51              	.L3:
+  52              		.loc 1 66 0 is_stmt 0 discriminator 2
+  53 0010 7B68     		ldr	r3, [r7, #4]
+  54 0012 0133     		add	r3, r3, #1
+  55 0014 7B60     		str	r3, [r7, #4]
+  56              	.L2:
+  57              		.loc 1 66 0 discriminator 1
+  58 0016 7B68     		ldr	r3, [r7, #4]
+  59 0018 362B     		cmp	r3, #54
+  60 001a F9DD     		ble	.L3
+  67:../Sources/ProcessorExpert.c **** }
+  61              		.loc 1 67 0 is_stmt 1
+  62 001c BD46     		mov	sp, r7
+  63 001e 02B0     		add	sp, sp, #8
+  64              		@ sp needed for prologue
+  65 0020 80BD     		pop	{r7, pc}
+  66              		.cfi_endproc
+  67              	.LFE0:
+  69 0022 C046     		.section	.text.send_16bit_SPI,"ax",%progbits
+  70              		.align	2
+  71              		.global	send_16bit_SPI
+  72              		.code	16
+  73              		.thumb_func
+  75              	send_16bit_SPI:
+  76              	.LFB1:
+  68:../Sources/ProcessorExpert.c **** 
+  69:../Sources/ProcessorExpert.c **** 
+  70:../Sources/ProcessorExpert.c **** void send_16bit_SPI(unsigned short data16)
+  71:../Sources/ProcessorExpert.c **** {
+  77              		.loc 1 71 0
+  78              		.cfi_startproc
+  79 0000 80B5     		push	{r7, lr}
+  80              	.LCFI3:
+  81              		.cfi_def_cfa_offset 8
+  82              		.cfi_offset 7, -8
+  83              		.cfi_offset 14, -4
+  84 0002 84B0     		sub	sp, sp, #16
+  85              	.LCFI4:
+  86              		.cfi_def_cfa_offset 24
+  87 0004 00AF     		add	r7, sp, #0
+  88              	.LCFI5:
+  89              		.cfi_def_cfa_register 7
+  90 0006 021C     		mov	r2, r0
+  91 0008 BB1D     		add	r3, r7, #6
+  92 000a 1A80     		strh	r2, [r3]
+  72:../Sources/ProcessorExpert.c **** 	/* Set CS */
+  73:../Sources/ProcessorExpert.c **** 	//SPIO_SetFieldValue(Data_SPIO,CS,0);
+  74:../Sources/ProcessorExpert.c **** 	//GPIOD_PCOR = 0x00000001;
+  75:../Sources/ProcessorExpert.c **** 	CSBit_ClrVal(Data_CS);
+  93              		.loc 1 75 0
+  94 000c 1C4B     		ldr	r3, .L9
+  95 000e 1B68     		ldr	r3, [r3]
+  96 0010 181C     		mov	r0, r3
+  97 0012 FFF7FEFF 		bl	CSBit_ClrVal
+  76:../Sources/ProcessorExpert.c **** 			
+  77:../Sources/ProcessorExpert.c **** 	/* Split bytes */
+  78:../Sources/ProcessorExpert.c **** 	uint8_t upper = (uint8_t)((data16 & 0xFF00) >> 8);
+  98              		.loc 1 78 0
+  99 0016 BB1D     		add	r3, r7, #6
+ 100 0018 1B88     		ldrh	r3, [r3]
+ 101 001a 1B0A     		lsr	r3, r3, #8
+ 102 001c 9AB2     		uxth	r2, r3
+ 103 001e 3B1C     		mov	r3, r7
+ 104 0020 0F33     		add	r3, r3, #15
+ 105 0022 1A70     		strb	r2, [r3]
+  79:../Sources/ProcessorExpert.c **** 	uint8_t lower = (uint8_t)(data16 & 0xFF);
+ 106              		.loc 1 79 0
+ 107 0024 3B1C     		mov	r3, r7
+ 108 0026 0E33     		add	r3, r3, #14
+ 109 0028 BA1D     		add	r2, r7, #6
+ 110 002a 1288     		ldrh	r2, [r2]
+ 111 002c 1A70     		strb	r2, [r3]
+  80:../Sources/ProcessorExpert.c **** 	
+  81:../Sources/ProcessorExpert.c **** 	/* Send MSB */
+  82:../Sources/ProcessorExpert.c **** 	while(!(SPI_S_SPTEF_MASK & SPI0_S)){asm("nop");}
+ 112              		.loc 1 82 0
+ 113 002e 00E0     		b	.L5
+ 114              	.L6:
+ 115              		.loc 1 82 0 is_stmt 0 discriminator 2
+ 116              	@ 82 "../Sources/ProcessorExpert.c" 1
+ 117 0030 C046     		nop
+ 118              	@ 0 "" 2
+ 119              		.code	16
+ 120              	.L5:
+ 121              		.loc 1 82 0 discriminator 1
+ 122 0032 144B     		ldr	r3, .L9+4
+ 123 0034 DB78     		ldrb	r3, [r3, #3]
+ 124 0036 DAB2     		uxtb	r2, r3
+ 125 0038 2023     		mov	r3, #32
+ 126 003a 1340     		and	r3, r2
+ 127 003c DBB2     		uxtb	r3, r3
+ 128 003e 002B     		cmp	r3, #0
+ 129 0040 F6D0     		beq	.L6
+  83:../Sources/ProcessorExpert.c **** 	SPI0_D = upper;
+ 130              		.loc 1 83 0 is_stmt 1
+ 131 0042 104B     		ldr	r3, .L9+4
+ 132 0044 3A1C     		mov	r2, r7
+ 133 0046 0F32     		add	r2, r2, #15
+ 134 0048 1278     		ldrb	r2, [r2]
+ 135 004a 5A71     		strb	r2, [r3, #5]
+  84:../Sources/ProcessorExpert.c **** 	
+  85:../Sources/ProcessorExpert.c **** 	/* Send LSB */
+  86:../Sources/ProcessorExpert.c **** 	while(!(SPI_S_SPTEF_MASK & SPI0_S)){asm("nop");}
+ 136              		.loc 1 86 0
+ 137 004c 00E0     		b	.L7
+ 138              	.L8:
+ 139              		.loc 1 86 0 is_stmt 0 discriminator 2
+ 140              	@ 86 "../Sources/ProcessorExpert.c" 1
+ 141 004e C046     		nop
+ 142              	@ 0 "" 2
+ 143              		.code	16
+ 144              	.L7:
+ 145              		.loc 1 86 0 discriminator 1
+ 146 0050 0C4B     		ldr	r3, .L9+4
+ 147 0052 DB78     		ldrb	r3, [r3, #3]
+ 148 0054 DAB2     		uxtb	r2, r3
+ 149 0056 2023     		mov	r3, #32
+ 150 0058 1340     		and	r3, r2
+ 151 005a DBB2     		uxtb	r3, r3
+ 152 005c 002B     		cmp	r3, #0
+ 153 005e F6D0     		beq	.L8
+  87:../Sources/ProcessorExpert.c **** 	SPI0_D = lower;
+ 154              		.loc 1 87 0 is_stmt 1
+ 155 0060 084B     		ldr	r3, .L9+4
+ 156 0062 3A1C     		mov	r2, r7
+ 157 0064 0E32     		add	r2, r2, #14
+ 158 0066 1278     		ldrb	r2, [r2]
+ 159 0068 5A71     		strb	r2, [r3, #5]
+  88:../Sources/ProcessorExpert.c **** 	
+  89:../Sources/ProcessorExpert.c **** 	/* Clear CS */
+  90:../Sources/ProcessorExpert.c **** 	//SPIO_SetFieldValue(Data_SPIO,CS,1);
+  91:../Sources/ProcessorExpert.c **** 	CSBit_SetVal(Data_CS);
+ 160              		.loc 1 91 0
+ 161 006a 054B     		ldr	r3, .L9
+ 162 006c 1B68     		ldr	r3, [r3]
+ 163 006e 181C     		mov	r0, r3
+ 164 0070 FFF7FEFF 		bl	CSBit_SetVal
+  92:../Sources/ProcessorExpert.c **** 	
+  93:../Sources/ProcessorExpert.c **** 	delaySmall();
+ 165              		.loc 1 93 0
+ 166 0074 FFF7FEFF 		bl	delaySmall
+  94:../Sources/ProcessorExpert.c **** }
+ 167              		.loc 1 94 0
+ 168 0078 BD46     		mov	sp, r7
+ 169 007a 04B0     		add	sp, sp, #16
+ 170              		@ sp needed for prologue
+ 171 007c 80BD     		pop	{r7, pc}
+ 172              	.L10:
+ 173 007e C046     		.align	2
+ 174              	.L9:
+ 175 0080 00000000 		.word	Data_CS
+ 176 0084 00600740 		.word	1074225152
+ 177              		.cfi_endproc
+ 178              	.LFE1:
+ 180              		.section	.text.set_reset_pin,"ax",%progbits
+ 181              		.align	2
+ 182              		.global	set_reset_pin
+ 183              		.code	16
+ 184              		.thumb_func
+ 186              	set_reset_pin:
+ 187              	.LFB2:
+  95:../Sources/ProcessorExpert.c **** 
+  96:../Sources/ProcessorExpert.c **** 
+  97:../Sources/ProcessorExpert.c **** void set_reset_pin(int state)
+  98:../Sources/ProcessorExpert.c **** {
+ 188              		.loc 1 98 0
+ 189              		.cfi_startproc
+ 190 0000 80B5     		push	{r7, lr}
+ 191              	.LCFI6:
+ 192              		.cfi_def_cfa_offset 8
+ 193              		.cfi_offset 7, -8
+ 194              		.cfi_offset 14, -4
+ 195 0002 82B0     		sub	sp, sp, #8
+ 196              	.LCFI7:
+ 197              		.cfi_def_cfa_offset 16
+ 198 0004 00AF     		add	r7, sp, #0
+ 199              	.LCFI8:
+ 200              		.cfi_def_cfa_register 7
+ 201 0006 7860     		str	r0, [r7, #4]
+  99:../Sources/ProcessorExpert.c ****    if(state == HIGH)
+ 202              		.loc 1 99 0
+ 203 0008 7B68     		ldr	r3, [r7, #4]
+ 204 000a 012B     		cmp	r3, #1
+ 205 000c 07D1     		bne	.L12
+ 100:../Sources/ProcessorExpert.c ****    {
+ 101:../Sources/ProcessorExpert.c **** 	   GPIO1_SetFieldValue(Data_GPIO,RESETB,1);
+ 206              		.loc 1 101 0
+ 207 000e 0A4B     		ldr	r3, .L14
+ 208 0010 1B68     		ldr	r3, [r3]
+ 209 0012 181C     		mov	r0, r3
+ 210 0014 0121     		mov	r1, #1
+ 211 0016 0122     		mov	r2, #1
+ 212 0018 FFF7FEFF 		bl	GPIO1_SetFieldValue
+ 213 001c 09E0     		b	.L11
+ 214              	.L12:
+ 102:../Sources/ProcessorExpert.c ****    }
+ 103:../Sources/ProcessorExpert.c ****    else if(state == LOW)
+ 215              		.loc 1 103 0
+ 216 001e 7B68     		ldr	r3, [r7, #4]
+ 217 0020 002B     		cmp	r3, #0
+ 218 0022 06D1     		bne	.L11
+ 104:../Sources/ProcessorExpert.c ****    {
+ 105:../Sources/ProcessorExpert.c **** 	   GPIO1_SetFieldValue(Data_GPIO, RESETB, 0);
+ 219              		.loc 1 105 0
+ 220 0024 044B     		ldr	r3, .L14
+ 221 0026 1B68     		ldr	r3, [r3]
+ 222 0028 181C     		mov	r0, r3
+ 223 002a 0121     		mov	r1, #1
+ 224 002c 0022     		mov	r2, #0
+ 225 002e FFF7FEFF 		bl	GPIO1_SetFieldValue
+ 226              	.L11:
+ 106:../Sources/ProcessorExpert.c ****    }
+ 107:../Sources/ProcessorExpert.c **** }
+ 227              		.loc 1 107 0
+ 228 0032 BD46     		mov	sp, r7
+ 229 0034 02B0     		add	sp, sp, #8
+ 230              		@ sp needed for prologue
+ 231 0036 80BD     		pop	{r7, pc}
+ 232              	.L15:
+ 233              		.align	2
+ 234              	.L14:
+ 235 0038 00000000 		.word	Data_GPIO
+ 236              		.cfi_endproc
+ 237              	.LFE2:
+ 239              		.section	.text.set_drven_pin,"ax",%progbits
+ 240              		.align	2
+ 241              		.global	set_drven_pin
+ 242              		.code	16
+ 243              		.thumb_func
+ 245              	set_drven_pin:
+ 246              	.LFB3:
+ 108:../Sources/ProcessorExpert.c **** 
+ 109:../Sources/ProcessorExpert.c **** 
+ 110:../Sources/ProcessorExpert.c **** void set_drven_pin(int state)
+ 111:../Sources/ProcessorExpert.c **** {
+ 247              		.loc 1 111 0
+ 248              		.cfi_startproc
+ 249 0000 80B5     		push	{r7, lr}
+ 250              	.LCFI9:
+ 251              		.cfi_def_cfa_offset 8
+ 252              		.cfi_offset 7, -8
+ 253              		.cfi_offset 14, -4
+ 254 0002 82B0     		sub	sp, sp, #8
+ 255              	.LCFI10:
+ 256              		.cfi_def_cfa_offset 16
+ 257 0004 00AF     		add	r7, sp, #0
+ 258              	.LCFI11:
+ 259              		.cfi_def_cfa_register 7
+ 260 0006 7860     		str	r0, [r7, #4]
+ 112:../Sources/ProcessorExpert.c ****    if(state == HIGH)
+ 261              		.loc 1 112 0
+ 262 0008 7B68     		ldr	r3, [r7, #4]
+ 263 000a 012B     		cmp	r3, #1
+ 264 000c 07D1     		bne	.L17
+ 113:../Sources/ProcessorExpert.c ****    {
+ 114:../Sources/ProcessorExpert.c ****      GPIO1_SetFieldValue(Data_GPIO,DRVEN,1);
+ 265              		.loc 1 114 0
+ 266 000e 0A4B     		ldr	r3, .L19
+ 267 0010 1B68     		ldr	r3, [r3]
+ 268 0012 181C     		mov	r0, r3
+ 269 0014 0021     		mov	r1, #0
+ 270 0016 0122     		mov	r2, #1
+ 271 0018 FFF7FEFF 		bl	GPIO1_SetFieldValue
+ 272 001c 09E0     		b	.L16
+ 273              	.L17:
+ 115:../Sources/ProcessorExpert.c ****    }
+ 116:../Sources/ProcessorExpert.c ****    else if(state == LOW)
+ 274              		.loc 1 116 0
+ 275 001e 7B68     		ldr	r3, [r7, #4]
+ 276 0020 002B     		cmp	r3, #0
+ 277 0022 06D1     		bne	.L16
+ 117:../Sources/ProcessorExpert.c ****    {
+ 118:../Sources/ProcessorExpert.c **** 	   GPIO1_SetFieldValue(Data_GPIO,DRVEN,0);
+ 278              		.loc 1 118 0
+ 279 0024 044B     		ldr	r3, .L19
+ 280 0026 1B68     		ldr	r3, [r3]
+ 281 0028 181C     		mov	r0, r3
+ 282 002a 0021     		mov	r1, #0
+ 283 002c 0022     		mov	r2, #0
+ 284 002e FFF7FEFF 		bl	GPIO1_SetFieldValue
+ 285              	.L16:
+ 119:../Sources/ProcessorExpert.c ****    }
+ 120:../Sources/ProcessorExpert.c **** }
+ 286              		.loc 1 120 0
+ 287 0032 BD46     		mov	sp, r7
+ 288 0034 02B0     		add	sp, sp, #8
+ 289              		@ sp needed for prologue
+ 290 0036 80BD     		pop	{r7, pc}
+ 291              	.L20:
+ 292              		.align	2
+ 293              	.L19:
+ 294 0038 00000000 		.word	Data_GPIO
+ 295              		.cfi_endproc
+ 296              	.LFE3:
+ 298              		.section	.text.UpdateColors,"ax",%progbits
+ 299              		.align	2
+ 300              		.global	UpdateColors
+ 301              		.code	16
+ 302              		.thumb_func
+ 304              	UpdateColors:
+ 305              	.LFB4:
+ 121:../Sources/ProcessorExpert.c **** 
+ 122:../Sources/ProcessorExpert.c **** void UpdateColors(char color)
+ 123:../Sources/ProcessorExpert.c **** {
+ 306              		.loc 1 123 0
+ 307              		.cfi_startproc
+ 308 0000 80B5     		push	{r7, lr}
+ 309              	.LCFI12:
+ 310              		.cfi_def_cfa_offset 8
+ 311              		.cfi_offset 7, -8
+ 312              		.cfi_offset 14, -4
+ 313 0002 82B0     		sub	sp, sp, #8
+ 314              	.LCFI13:
+ 315              		.cfi_def_cfa_offset 16
+ 316 0004 00AF     		add	r7, sp, #0
+ 317              	.LCFI14:
+ 318              		.cfi_def_cfa_register 7
+ 319 0006 021C     		mov	r2, r0
+ 320 0008 FB1D     		add	r3, r7, #7
+ 321 000a 1A70     		strb	r2, [r3]
+ 124:../Sources/ProcessorExpert.c ****     if(color & 0x01)
+ 322              		.loc 1 124 0
+ 323 000c FB1D     		add	r3, r7, #7
+ 324 000e 1A78     		ldrb	r2, [r3]
+ 325 0010 0123     		mov	r3, #1
+ 326 0012 1340     		and	r3, r2
+ 327 0014 05D0     		beq	.L22
+ 125:../Sources/ProcessorExpert.c ****     {
+ 126:../Sources/ProcessorExpert.c ****     	/* Set RED */
+ 127:../Sources/ProcessorExpert.c ****     	LEDRed_SetVal(Data_LEDRed);
+ 328              		.loc 1 127 0
+ 329 0016 0F4B     		ldr	r3, .L26
+ 330 0018 1B68     		ldr	r3, [r3]
+ 331 001a 181C     		mov	r0, r3
+ 332 001c FFF7FEFF 		bl	LEDRed_SetVal
+ 333 0020 04E0     		b	.L23
+ 334              	.L22:
+ 128:../Sources/ProcessorExpert.c ****     }
+ 129:../Sources/ProcessorExpert.c ****     else
+ 130:../Sources/ProcessorExpert.c ****     {
+ 131:../Sources/ProcessorExpert.c ****     	/* Clear RED */
+ 132:../Sources/ProcessorExpert.c ****     	LEDRed_ClrVal(Data_LEDRed);
+ 335              		.loc 1 132 0
+ 336 0022 0C4B     		ldr	r3, .L26
+ 337 0024 1B68     		ldr	r3, [r3]
+ 338 0026 181C     		mov	r0, r3
+ 339 0028 FFF7FEFF 		bl	LEDRed_ClrVal
+ 340              	.L23:
+ 133:../Sources/ProcessorExpert.c ****     }
+ 134:../Sources/ProcessorExpert.c ****     if(color & 0x02)
+ 341              		.loc 1 134 0
+ 342 002c FB1D     		add	r3, r7, #7
+ 343 002e 1A78     		ldrb	r2, [r3]
+ 344 0030 0223     		mov	r3, #2
+ 345 0032 1340     		and	r3, r2
+ 346 0034 05D0     		beq	.L24
+ 135:../Sources/ProcessorExpert.c ****     {
+ 136:../Sources/ProcessorExpert.c ****     	/* Set GREEN */
+ 137:../Sources/ProcessorExpert.c ****     	LEDGreen_SetVal(Data_LEDGreen);
+ 347              		.loc 1 137 0
+ 348 0036 084B     		ldr	r3, .L26+4
+ 349 0038 1B68     		ldr	r3, [r3]
+ 350 003a 181C     		mov	r0, r3
+ 351 003c FFF7FEFF 		bl	LEDGreen_SetVal
+ 352 0040 04E0     		b	.L21
+ 353              	.L24:
+ 138:../Sources/ProcessorExpert.c ****     }
+ 139:../Sources/ProcessorExpert.c ****     else
+ 140:../Sources/ProcessorExpert.c ****     {
+ 141:../Sources/ProcessorExpert.c ****     	/* Clr GREEN */
+ 142:../Sources/ProcessorExpert.c ****     	LEDGreen_ClrVal(Data_LEDGreen);
+ 354              		.loc 1 142 0
+ 355 0042 054B     		ldr	r3, .L26+4
+ 356 0044 1B68     		ldr	r3, [r3]
+ 357 0046 181C     		mov	r0, r3
+ 358 0048 FFF7FEFF 		bl	LEDGreen_ClrVal
+ 359              	.L21:
+ 143:../Sources/ProcessorExpert.c ****     }
+ 144:../Sources/ProcessorExpert.c **** }
+ 360              		.loc 1 144 0
+ 361 004c BD46     		mov	sp, r7
+ 362 004e 02B0     		add	sp, sp, #8
+ 363              		@ sp needed for prologue
+ 364 0050 80BD     		pop	{r7, pc}
+ 365              	.L27:
+ 366 0052 C046     		.align	2
+ 367              	.L26:
+ 368 0054 00000000 		.word	Data_LEDRed
+ 369 0058 00000000 		.word	Data_LEDGreen
+ 370              		.cfi_endproc
+ 371              	.LFE4:
+ 373              		.section	.rodata
+ 374              		.align	2
+ 375              	.LC5:
+ 376 0000 2A2A2A2A 		.ascii	"***************************************************"
+ 376      2A2A2A2A 
+ 376      2A2A2A2A 
+ 376      2A2A2A2A 
+ 376      2A2A2A2A 
+ 377 0033 2A2A2A2A 		.ascii	"******\000"
+ 377      2A2A00
+ 378 003a 0000     		.align	2
+ 379              	.LC7:
+ 380 003c 2A2A2A20 		.ascii	"*** MC33816 Fuel Injector Driver Board for CDI     "
+ 380      4D433333 
+ 380      38313620 
+ 380      4675656C 
+ 380      20496E6A 
+ 381 006f 20202020 		.ascii	"      \000"
+ 381      202000
+ 382 0076 0000     		.align	2
+ 383              	.LC9:
+ 384 0078 50726F6A 		.ascii	"Project description:\000"
+ 384      65637420 
+ 384      64657363 
+ 384      72697074 
+ 384      696F6E3A 
+ 385 008d 000000   		.align	2
+ 386              	.LC11:
+ 387 0090 4272696E 		.ascii	"Bring up MC33816 fuel injector driver\000"
+ 387      67207570 
+ 387      204D4333 
+ 387      33383136 
+ 387      20667565 
+ 388 00b6 0000     		.align	2
+ 389              	.LC13:
+ 390 00b8 436F6E66 		.ascii	"Configure for Bosch CDI injector current profile\000"
+ 390      69677572 
+ 390      6520666F 
+ 390      7220426F 
+ 390      73636820 
+ 391 00e9 000000   		.align	2
+ 392              	.LC20:
+ 393 00ec 2A2A2A20 		.ascii	"*** Load the Code and Data RAM, then set DRVEN     "
+ 393      4C6F6164 
+ 393      20746865 
+ 393      20436F64 
+ 393      6520616E 
+ 394 011f 20202020 		.ascii	"      \000"
+ 394      202000
+ 395 0126 0000     		.align	2
+ 396              	.LC22:
+ 397 0128 53504920 		.ascii	"SPI load finished!\000"
+ 397      6C6F6164 
+ 397      2066696E 
+ 397      69736865 
+ 397      642100
+ 398 013b 00       		.section	.text.main,"ax",%progbits
+ 399              		.align	2
+ 400              		.global	main
+ 401              		.code	16
+ 402              		.thumb_func
+ 404              	main:
+ 405              	.LFB5:
+ 145:../Sources/ProcessorExpert.c **** 
+ 146:../Sources/ProcessorExpert.c **** int main(void)
+ 147:../Sources/ProcessorExpert.c **** {
+ 406              		.loc 1 147 0
+ 407              		.cfi_startproc
+ 408 0000 80B5     		push	{r7, lr}
+ 409              	.LCFI15:
+ 410              		.cfi_def_cfa_offset 8
+ 411              		.cfi_offset 7, -8
+ 412              		.cfi_offset 14, -4
+ 413 0002 00AF     		add	r7, sp, #0
+ 414              	.LCFI16:
+ 415              		.cfi_def_cfa_register 7
+ 148:../Sources/ProcessorExpert.c ****   /* Write your local variable definition here */
+ 149:../Sources/ProcessorExpert.c ****  
+ 150:../Sources/ProcessorExpert.c ****  
+ 151:../Sources/ProcessorExpert.c ****   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
+ 152:../Sources/ProcessorExpert.c ****   PE_low_level_init();
+ 416              		.loc 1 152 0
+ 417 0004 FFF7FEFF 		bl	PE_low_level_init
+ 153:../Sources/ProcessorExpert.c ****   /*** End of Processor Expert internal initialization.                    ***/
+ 154:../Sources/ProcessorExpert.c ****   
+ 155:../Sources/ProcessorExpert.c ****   printf("*********************************************************\n");
+ 418              		.loc 1 155 0
+ 419 0008 634B     		ldr	r3, .L30
+ 420 000a 181C     		mov	r0, r3
+ 421 000c FFF7FEFF 		bl	puts
+ 156:../Sources/ProcessorExpert.c ****   printf("*** MC33816 Fuel Injector Driver Board for CDI           \n");
+ 422              		.loc 1 156 0
+ 423 0010 624B     		ldr	r3, .L30+4
+ 424 0012 181C     		mov	r0, r3
+ 425 0014 FFF7FEFF 		bl	puts
+ 157:../Sources/ProcessorExpert.c ****   printf("*********************************************************\n");
+ 426              		.loc 1 157 0
+ 427 0018 5F4B     		ldr	r3, .L30
+ 428 001a 181C     		mov	r0, r3
+ 429 001c FFF7FEFF 		bl	puts
+ 158:../Sources/ProcessorExpert.c ****   printf("\n");
+ 430              		.loc 1 158 0
+ 431 0020 0A20     		mov	r0, #10
+ 432 0022 FFF7FEFF 		bl	putchar
+ 159:../Sources/ProcessorExpert.c ****   printf("Project description:\n");
+ 433              		.loc 1 159 0
+ 434 0026 5E4B     		ldr	r3, .L30+8
+ 435 0028 181C     		mov	r0, r3
+ 436 002a FFF7FEFF 		bl	puts
+ 160:../Sources/ProcessorExpert.c ****   printf("Bring up MC33816 fuel injector driver\n");
+ 437              		.loc 1 160 0
+ 438 002e 5D4B     		ldr	r3, .L30+12
+ 439 0030 181C     		mov	r0, r3
+ 440 0032 FFF7FEFF 		bl	puts
+ 161:../Sources/ProcessorExpert.c ****   printf("Configure for Bosch CDI injector current profile\n");
+ 441              		.loc 1 161 0
+ 442 0036 5C4B     		ldr	r3, .L30+16
+ 443 0038 181C     		mov	r0, r3
+ 444 003a FFF7FEFF 		bl	puts
+ 162:../Sources/ProcessorExpert.c ****   printf("\n");
+ 445              		.loc 1 162 0
+ 446 003e 0A20     		mov	r0, #10
+ 447 0040 FFF7FEFF 		bl	putchar
+ 163:../Sources/ProcessorExpert.c **** 
+ 164:../Sources/ProcessorExpert.c ****   /* Init PWM OUT for Clock */
+ 165:../Sources/ProcessorExpert.c ****   Data_PWM = PWM1_Init(NULL);
+ 448              		.loc 1 165 0
+ 449 0044 0020     		mov	r0, #0
+ 450 0046 FFF7FEFF 		bl	PWM1_Init
+ 451 004a 021C     		mov	r2, r0
+ 452 004c 574B     		ldr	r3, .L30+20
+ 453 004e 1A60     		str	r2, [r3]
+ 166:../Sources/ProcessorExpert.c ****   
+ 167:../Sources/ProcessorExpert.c ****   /* Init GPIO */
+ 168:../Sources/ProcessorExpert.c ****   Data_GPIO = GPIO1_Init(NULL);
+ 454              		.loc 1 168 0
+ 455 0050 0020     		mov	r0, #0
+ 456 0052 FFF7FEFF 		bl	GPIO1_Init
+ 457 0056 021C     		mov	r2, r0
+ 458 0058 554B     		ldr	r3, .L30+24
+ 459 005a 1A60     		str	r2, [r3]
+ 169:../Sources/ProcessorExpert.c ****   
+ 170:../Sources/ProcessorExpert.c ****   /* Init CS */
+ 171:../Sources/ProcessorExpert.c ****   Data_CS = CSBit_Init(NULL);
+ 460              		.loc 1 171 0
+ 461 005c 0020     		mov	r0, #0
+ 462 005e FFF7FEFF 		bl	CSBit_Init
+ 463 0062 021C     		mov	r2, r0
+ 464 0064 534B     		ldr	r3, .L30+28
+ 465 0066 1A60     		str	r2, [r3]
+ 172:../Sources/ProcessorExpert.c **** 	
+ 173:../Sources/ProcessorExpert.c ****   /* Init SPI */
+ 174:../Sources/ProcessorExpert.c ****   //Data_SPI = SPI_Init(NULL);
+ 175:../Sources/ProcessorExpert.c ****   //Data_SPIO = SPIO_Init(NULL);
+ 176:../Sources/ProcessorExpert.c ****   
+ 177:../Sources/ProcessorExpert.c ****   /* Init SPI manually */
+ 178:../Sources/ProcessorExpert.c ****   SIM_SCGC5 |= SIM_SCGC5_PORTD_MASK;      //Turn on clock to D module  
+ 466              		.loc 1 178 0
+ 467 0068 534A     		ldr	r2, .L30+32
+ 468 006a 5349     		ldr	r1, .L30+32
+ 469 006c 534B     		ldr	r3, .L30+36
+ 470 006e CB58     		ldr	r3, [r1, r3]
+ 471 0070 8021     		mov	r1, #128
+ 472 0072 4901     		lsl	r1, r1, #5
+ 473 0074 1943     		orr	r1, r3
+ 474 0076 514B     		ldr	r3, .L30+36
+ 475 0078 D150     		str	r1, [r2, r3]
+ 179:../Sources/ProcessorExpert.c ****   SIM_SCGC4 |= SIM_SCGC4_SPI0_MASK;       //Enable SPI0 clock  
+ 476              		.loc 1 179 0
+ 477 007a 4F4A     		ldr	r2, .L30+32
+ 478 007c 4E49     		ldr	r1, .L30+32
+ 479 007e 504B     		ldr	r3, .L30+40
+ 480 0080 CB58     		ldr	r3, [r1, r3]
+ 481 0082 8021     		mov	r1, #128
+ 482 0084 C903     		lsl	r1, r1, #15
+ 483 0086 1943     		orr	r1, r3
+ 484 0088 4D4B     		ldr	r3, .L30+40
+ 485 008a D150     		str	r1, [r2, r3]
+ 180:../Sources/ProcessorExpert.c ****    
+ 181:../Sources/ProcessorExpert.c ****    //PORTD_PCR0 = PORT_PCR_MUX(0x1);    //Set PTD0 to mux 1 [GPIO]  
+ 182:../Sources/ProcessorExpert.c ****    PORTD_PCR1 = PORT_PCR_MUX(0x2);    //Set PTD1 to mux 2 [SPI0_SCK]  
+ 486              		.loc 1 182 0
+ 487 008c 4D4B     		ldr	r3, .L30+44
+ 488 008e 8022     		mov	r2, #128
+ 489 0090 9200     		lsl	r2, r2, #2
+ 490 0092 5A60     		str	r2, [r3, #4]
+ 183:../Sources/ProcessorExpert.c ****    PORTD_PCR2 = PORT_PCR_MUX(0x2);    //Set PTD2 to mux 2 [SPI0_MOSI]  
+ 491              		.loc 1 183 0
+ 492 0094 4B4B     		ldr	r3, .L30+44
+ 493 0096 8022     		mov	r2, #128
+ 494 0098 9200     		lsl	r2, r2, #2
+ 495 009a 9A60     		str	r2, [r3, #8]
+ 184:../Sources/ProcessorExpert.c ****    PORTD_PCR3 = PORT_PCR_MUX(0x2);    //Set PTD3 to mux 2 [SPIO_MISO]  
+ 496              		.loc 1 184 0
+ 497 009c 494B     		ldr	r3, .L30+44
+ 498 009e 8022     		mov	r2, #128
+ 499 00a0 9200     		lsl	r2, r2, #2
+ 500 00a2 DA60     		str	r2, [r3, #12]
+ 185:../Sources/ProcessorExpert.c ****    
+ 186:../Sources/ProcessorExpert.c ****    SPI0_C1 = SPI_C1_MSTR_MASK | SPI_C1_CPOL_MASK   ;   //Set SPI0 to Master
+ 501              		.loc 1 186 0
+ 502 00a4 484B     		ldr	r3, .L30+48
+ 503 00a6 1822     		mov	r2, #24
+ 504 00a8 1A70     		strb	r2, [r3]
+ 187:../Sources/ProcessorExpert.c ****      
+ 188:../Sources/ProcessorExpert.c ****    SPI0_C2 = 0;//SPI_C2_MODFEN_MASK;   //Master SS pin acts as slave select output   
+ 505              		.loc 1 188 0
+ 506 00aa 474B     		ldr	r3, .L30+48
+ 507 00ac 0022     		mov	r2, #0
+ 508 00ae 5A70     		strb	r2, [r3, #1]
+ 189:../Sources/ProcessorExpert.c ****      
+ 190:../Sources/ProcessorExpert.c ****    SPI0_BR = (SPI_BR_SPPR(0x02) | SPI_BR_SPR(0x08));     //Set baud rate prescale divisor to 3 & se
+ 509              		.loc 1 190 0
+ 510 00b0 454B     		ldr	r3, .L30+48
+ 511 00b2 2822     		mov	r2, #40
+ 512 00b4 9A70     		strb	r2, [r3, #2]
+ 191:../Sources/ProcessorExpert.c ****      
+ 192:../Sources/ProcessorExpert.c ****   /* Clear CS */
+ 193:../Sources/ProcessorExpert.c ****    CSBit_SetVal(Data_CS);
+ 513              		.loc 1 193 0
+ 514 00b6 3F4B     		ldr	r3, .L30+28
+ 515 00b8 1B68     		ldr	r3, [r3]
+ 516 00ba 181C     		mov	r0, r3
+ 517 00bc FFF7FEFF 		bl	CSBit_SetVal
+ 194:../Sources/ProcessorExpert.c ****    SPI0_C1 |= SPI_C1_SPE_MASK;    //Enable SPI0  
+ 518              		.loc 1 194 0
+ 519 00c0 414B     		ldr	r3, .L30+48
+ 520 00c2 414A     		ldr	r2, .L30+48
+ 521 00c4 1278     		ldrb	r2, [r2]
+ 522 00c6 D2B2     		uxtb	r2, r2
+ 523 00c8 4021     		mov	r1, #64
+ 524 00ca 0A43     		orr	r2, r1
+ 525 00cc D2B2     		uxtb	r2, r2
+ 526 00ce 1A70     		strb	r2, [r3]
+ 195:../Sources/ProcessorExpert.c ****   /* SPI Pins:
+ 196:../Sources/ProcessorExpert.c ****    * PTD2 => MOSI
+ 197:../Sources/ProcessorExpert.c ****    * PTD3 => MISO
+ 198:../Sources/ProcessorExpert.c ****    * PTD1 => SCK
+ 199:../Sources/ProcessorExpert.c ****    */
+ 200:../Sources/ProcessorExpert.c **** 
+ 201:../Sources/ProcessorExpert.c ****   /* Init LEDs */
+ 202:../Sources/ProcessorExpert.c ****   Data_LEDGreen = LEDGreen_Init(NULL);
+ 527              		.loc 1 202 0
+ 528 00d0 0020     		mov	r0, #0
+ 529 00d2 FFF7FEFF 		bl	LEDGreen_Init
+ 530 00d6 021C     		mov	r2, r0
+ 531 00d8 3C4B     		ldr	r3, .L30+52
+ 532 00da 1A60     		str	r2, [r3]
+ 203:../Sources/ProcessorExpert.c ****   Data_LEDRed = LEDRed_Init(NULL);
+ 533              		.loc 1 203 0
+ 534 00dc 0020     		mov	r0, #0
+ 535 00de FFF7FEFF 		bl	LEDRed_Init
+ 536 00e2 021C     		mov	r2, r0
+ 537 00e4 3A4B     		ldr	r3, .L30+56
+ 538 00e6 1A60     		str	r2, [r3]
+ 204:../Sources/ProcessorExpert.c ****   
+ 205:../Sources/ProcessorExpert.c ****   printf("\n");
+ 539              		.loc 1 205 0
+ 540 00e8 0A20     		mov	r0, #10
+ 541 00ea FFF7FEFF 		bl	putchar
+ 206:../Sources/ProcessorExpert.c ****   printf("*********************************************************\n");
+ 542              		.loc 1 206 0
+ 543 00ee 2A4B     		ldr	r3, .L30
+ 544 00f0 181C     		mov	r0, r3
+ 545 00f2 FFF7FEFF 		bl	puts
+ 207:../Sources/ProcessorExpert.c ****   printf("*** Load the Code and Data RAM, then set DRVEN           \n");
+ 546              		.loc 1 207 0
+ 547 00f6 374B     		ldr	r3, .L30+60
+ 548 00f8 181C     		mov	r0, r3
+ 549 00fa FFF7FEFF 		bl	puts
+ 208:../Sources/ProcessorExpert.c ****   printf("*********************************************************\n");
+ 550              		.loc 1 208 0
+ 551 00fe 264B     		ldr	r3, .L30
+ 552 0100 181C     		mov	r0, r3
+ 553 0102 FFF7FEFF 		bl	puts
+ 209:../Sources/ProcessorExpert.c ****   
+ 210:../Sources/ProcessorExpert.c ****   UpdateColors(3);
+ 554              		.loc 1 210 0
+ 555 0106 0320     		mov	r0, #3
+ 556 0108 FFF7FEFF 		bl	UpdateColors
+ 211:../Sources/ProcessorExpert.c **** 
+ 212:../Sources/ProcessorExpert.c ****   set_reset_pin(LOW);             // Sets MC33816 reset signal low
+ 557              		.loc 1 212 0
+ 558 010c 0020     		mov	r0, #0
+ 559 010e FFF7FEFF 		bl	set_reset_pin
+ 213:../Sources/ProcessorExpert.c ****   set_drven_pin(LOW);
+ 560              		.loc 1 213 0
+ 561 0112 0020     		mov	r0, #0
+ 562 0114 FFF7FEFF 		bl	set_drven_pin
+ 214:../Sources/ProcessorExpert.c ****   
+ 215:../Sources/ProcessorExpert.c ****   delay(100);                     // pause 100ms
+ 563              		.loc 1 215 0
+ 564 0118 6420     		mov	r0, #100
+ 565 011a FFF7FEFF 		bl	delay
+ 216:../Sources/ProcessorExpert.c ****   
+ 217:../Sources/ProcessorExpert.c ****   UpdateColors(2);
+ 566              		.loc 1 217 0
+ 567 011e 0220     		mov	r0, #2
+ 568 0120 FFF7FEFF 		bl	UpdateColors
+ 218:../Sources/ProcessorExpert.c ****   
+ 219:../Sources/ProcessorExpert.c ****   set_reset_pin(HIGH);            // Sets MC33816 reset signal high
+ 569              		.loc 1 219 0
+ 570 0124 0120     		mov	r0, #1
+ 571 0126 FFF7FEFF 		bl	set_reset_pin
+ 220:../Sources/ProcessorExpert.c ****   
+ 221:../Sources/ProcessorExpert.c ****   /* Wait for the PLL to lock */
+ 222:../Sources/ProcessorExpert.c ****   delay(10);
+ 572              		.loc 1 222 0
+ 573 012a 0A20     		mov	r0, #10
+ 574 012c FFF7FEFF 		bl	delay
+ 223:../Sources/ProcessorExpert.c **** 
+ 224:../Sources/ProcessorExpert.c ****   download_RAM(CODE_RAM1);        // transfers code RAM1
+ 575              		.loc 1 224 0
+ 576 0130 0020     		mov	r0, #0
+ 577 0132 FFF7FEFF 		bl	download_RAM
+ 225:../Sources/ProcessorExpert.c ****   download_RAM(CODE_RAM2);        // transfers code RAM2
+ 578              		.loc 1 225 0
+ 579 0136 0120     		mov	r0, #1
+ 580 0138 FFF7FEFF 		bl	download_RAM
+ 226:../Sources/ProcessorExpert.c ****   download_RAM(DATA_RAM);         // transfers data RAM
+ 581              		.loc 1 226 0
+ 582 013c 0220     		mov	r0, #2
+ 583 013e FFF7FEFF 		bl	download_RAM
+ 227:../Sources/ProcessorExpert.c **** 
+ 228:../Sources/ProcessorExpert.c ****   download_register(MAIN_REG);    // download main register configurations
+ 584              		.loc 1 228 0
+ 585 0142 0420     		mov	r0, #4
+ 586 0144 FFF7FEFF 		bl	download_register
+ 229:../Sources/ProcessorExpert.c ****   download_register(CH1_REG);     // download channel 1 register configurations
+ 587              		.loc 1 229 0
+ 588 0148 0020     		mov	r0, #0
+ 589 014a FFF7FEFF 		bl	download_register
+ 230:../Sources/ProcessorExpert.c ****   download_register(CH2_REG);     // download channel 2 register configurations
+ 590              		.loc 1 230 0
+ 591 014e 0120     		mov	r0, #1
+ 592 0150 FFF7FEFF 		bl	download_register
+ 231:../Sources/ProcessorExpert.c ****   download_register(IO_REG);      // download IO register configurations
+ 593              		.loc 1 231 0
+ 594 0154 0320     		mov	r0, #3
+ 595 0156 FFF7FEFF 		bl	download_register
+ 232:../Sources/ProcessorExpert.c ****   download_register(DIAG_REG);    // download diag register configurations
+ 596              		.loc 1 232 0
+ 597 015a 0220     		mov	r0, #2
+ 598 015c FFF7FEFF 		bl	download_register
+ 233:../Sources/ProcessorExpert.c ****   
+ 234:../Sources/ProcessorExpert.c ****   send_16bit_SPI(0x2001);         // enable flash and dual sequence ch1 (address = 0x100)
+ 599              		.loc 1 234 0
+ 600 0160 1D4B     		ldr	r3, .L30+64
+ 601 0162 181C     		mov	r0, r3
+ 602 0164 FFF7FEFF 		bl	send_16bit_SPI
+ 235:../Sources/ProcessorExpert.c ****   send_16bit_SPI(0x0018);
+ 603              		.loc 1 235 0
+ 604 0168 1820     		mov	r0, #24
+ 605 016a FFF7FEFF 		bl	send_16bit_SPI
+ 236:../Sources/ProcessorExpert.c **** 
+ 237:../Sources/ProcessorExpert.c ****   send_16bit_SPI(0x2401);         // enable flash and dual sequence ch2 (address = 0x120)
+ 606              		.loc 1 237 0
+ 607 016e 1B4B     		ldr	r3, .L30+68
+ 608 0170 181C     		mov	r0, r3
+ 609 0172 FFF7FEFF 		bl	send_16bit_SPI
+ 238:../Sources/ProcessorExpert.c ****   send_16bit_SPI(0x0018);
+ 610              		.loc 1 238 0
+ 611 0176 1820     		mov	r0, #24
+ 612 0178 FFF7FEFF 		bl	send_16bit_SPI
+ 239:../Sources/ProcessorExpert.c **** 
+ 240:../Sources/ProcessorExpert.c ****   /* Send a dummy transfer for no reason */
+ 241:../Sources/ProcessorExpert.c ****   send_16bit_SPI(0x0000);
+ 613              		.loc 1 241 0
+ 614 017c 0020     		mov	r0, #0
+ 615 017e FFF7FEFF 		bl	send_16bit_SPI
+ 242:../Sources/ProcessorExpert.c ****   
+ 243:../Sources/ProcessorExpert.c ****   set_drven_pin(HIGH);            // Sets drive enable signal high (enables outputs and vboost)
+ 616              		.loc 1 243 0
+ 617 0182 0120     		mov	r0, #1
+ 618 0184 FFF7FEFF 		bl	set_drven_pin
+ 244:../Sources/ProcessorExpert.c ****   
+ 245:../Sources/ProcessorExpert.c ****   UpdateColors(0);
+ 619              		.loc 1 245 0
+ 620 0188 0020     		mov	r0, #0
+ 621 018a FFF7FEFF 		bl	UpdateColors
+ 246:../Sources/ProcessorExpert.c **** 
+ 247:../Sources/ProcessorExpert.c ****   printf("SPI load finished!\n");
+ 622              		.loc 1 247 0
+ 623 018e 144B     		ldr	r3, .L30+72
+ 624 0190 181C     		mov	r0, r3
+ 625 0192 FFF7FEFF 		bl	puts
+ 626              	.L29:
+ 248:../Sources/ProcessorExpert.c **** 
+ 249:../Sources/ProcessorExpert.c ****       
+ 250:../Sources/ProcessorExpert.c ****   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
+ 251:../Sources/ProcessorExpert.c ****   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS 
+ 252:../Sources/ProcessorExpert.c ****   #ifdef PEX_RTOS_START
+ 253:../Sources/ProcessorExpert.c ****     PEX_RTOS_START();                  /* Startup of the selected RTOS. Macro is defined by the RTO
+ 254:../Sources/ProcessorExpert.c ****   #endif
+ 255:../Sources/ProcessorExpert.c ****   /*** End of RTOS startup code.  ***/
+ 256:../Sources/ProcessorExpert.c ****   /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
+ 257:../Sources/ProcessorExpert.c ****   for(;;){}
+ 627              		.loc 1 257 0 discriminator 1
+ 628 0196 FEE7     		b	.L29
+ 629              	.L31:
+ 630              		.align	2
+ 631              	.L30:
+ 632 0198 00000000 		.word	.LC5
+ 633 019c 3C000000 		.word	.LC7
+ 634 01a0 78000000 		.word	.LC9
+ 635 01a4 90000000 		.word	.LC11
+ 636 01a8 B8000000 		.word	.LC13
+ 637 01ac 00000000 		.word	Data_PWM
+ 638 01b0 00000000 		.word	Data_GPIO
+ 639 01b4 00000000 		.word	Data_CS
+ 640 01b8 00700440 		.word	1074032640
+ 641 01bc 38100000 		.word	4152
+ 642 01c0 34100000 		.word	4148
+ 643 01c4 00C00440 		.word	1074053120
+ 644 01c8 00600740 		.word	1074225152
+ 645 01cc 00000000 		.word	Data_LEDGreen
+ 646 01d0 00000000 		.word	Data_LEDRed
+ 647 01d4 EC000000 		.word	.LC20
+ 648 01d8 01200000 		.word	8193
+ 649 01dc 01240000 		.word	9217
+ 650 01e0 28010000 		.word	.LC22
+ 651              		.cfi_endproc
+ 652              	.LFE5:
+ 654              		.text
+ 655              	.Letext0:
+ 656              		.file 2 "C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint"
+ 657              		.file 3 "C:/Users/SAE_LP1/workspace/InjBoard/Generated_Code/PE_Types.h"
+ 658              		.file 4 "C:/Freescale/CW MCU v10.7/MCU/ProcessorExpert/lib/Kinetis/iofiles/MKL25Z4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 ProcessorExpert.c
+                            *COM*:00000004 Data_GPIO
+                            *COM*:00000004 Data_CS
+                            *COM*:00000004 Data_LEDRed
+                            *COM*:00000004 Data_LEDGreen
+                            *COM*:00000004 Data_PWM
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:23     .text.delaySmall:00000000 $t
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:28     .text.delaySmall:00000000 delaySmall
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:70     .text.send_16bit_SPI:00000000 $t
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:75     .text.send_16bit_SPI:00000000 send_16bit_SPI
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:175    .text.send_16bit_SPI:00000080 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:181    .text.set_reset_pin:00000000 $t
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:186    .text.set_reset_pin:00000000 set_reset_pin
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:235    .text.set_reset_pin:00000038 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:240    .text.set_drven_pin:00000000 $t
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:245    .text.set_drven_pin:00000000 set_drven_pin
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:294    .text.set_drven_pin:00000038 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:299    .text.UpdateColors:00000000 $t
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:304    .text.UpdateColors:00000000 UpdateColors
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:368    .text.UpdateColors:00000054 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:374    .rodata:00000000 $d
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:399    .text.main:00000000 $t
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:404    .text.main:00000000 main
+C:\Users\SAE_LP1\AppData\Local\Temp\ccA71g3G.s:632    .text.main:00000198 $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.aba60cd3b17efbc2d56a1d9fc6f583a6
+                           .group:00000000 wm4.ewl_c_version.h.9.0bcb57d6a3f89baae1f9b121de2772f5
+                           .group:00000000 wm4.os_enum.h.9.03d7426d632bb1a35ec1708754c41daf
+                           .group:00000000 wm4.ansi_prefix.ARM.h.13.2dd306b0ccbe86124098bfe3a0b58d88
+                           .group:00000000 wm4.ansi_parms.h.64.05090287ebda70c0d79c02b050dca090
+                           .group:00000000 wm4.limits_api.h.9.bc6daa20b3abae2bba6c512044e73b43
+                           .group:00000000 wm4.ewl_lib_ext1.h.14.f9b057cc049671136093886db2a3473f
+                           .group:00000000 wm4.cstdint.137.268b37259d2d366c21376cbd280e10d7
+                           .group:00000000 wm4.PE_Types.h.69.0f70e9553c29a787d42fe2ac9dbd945d
+                           .group:00000000 wm4.PE_Error.h.60.6ccf96637e85421388d147a5dcbc3621
+                           .group:00000000 wm4.PE_Const.h.61.443ca05468cb0c6bf080e06394e39146
+                           .group:00000000 wm4.MKL25Z4.h.61.adbdc31ae5ef570825ab0667cccdf447
+                           .group:00000000 wm4.Cpu.h.78.e1dd9945a5e7ab9c31a38ba183a322df
+                           .group:00000000 wm4.size_t.h.9.f983491a73b5c81f421ee8223b1ac5c0
+                           .group:00000000 wm4.ewl_rsize_t.h.11.b283831bb803e76ceb1756da2df9a1b5
+                           .group:00000000 wm4.cstddef.32.067e2ea187472b6198f9ace951e27a51
+                           .group:00000000 wm4.va_list.h.9.b0bb078841c0305c2667a31da10a9070
+                           .group:00000000 wm4.file_struc.h.13.79700b909bfbc91e5b3cffa0100f62cf
+                           .group:00000000 wm4.stdarg.ARM.h.9.32516e68edcca81ab31f48f233894821
+                           .group:00000000 wm4.stdio_api.h.71.3b2f2f9a22fa2b89114b19a43e47537d
+                           .group:00000000 wm4.cstdio.1186.6c7f5c80aaa542dbe41dde866b3043d9
+                           .group:00000000 wm4.IO1.h.123.12a3ddb175f8510413e272cf486b6f13
+                           .group:00000000 wm4.PDD_Types.h.5.e0b4125fe5201c5e1f688b067f4f0d54
+                           .group:00000000 wm4.TPM_PDD.h.47.938deaa7335b1be1e86f1f3ea98af3d6
+                           .group:00000000 wm4.TU1.h.131.b88ff748c6c68c5a4fb5a26e2d236fa3
+                           .group:00000000 wm4.PWM1.h.115.680dc27522312ce22703fe373ae9c8c9
+                           .group:00000000 wm4.GPIO_PDD.h.9.194cb77f647f40e9013b4c76617a0f52
+                           .group:00000000 wm4.LEDRed.h.103.cd60f4f000b120bf7e7185c12b57c800
+                           .group:00000000 wm4.LEDGreen.h.82.6bfe1b791f43b4324e0dea73e093527e
+                           .group:00000000 wm4.CSBit.h.82.ff7132ae69077fd0e7e8f415499ed4b0
+                           .group:00000000 wm4.PORT_PDD.h.9.e24435d4c3cbcc67beceb9e359966485
+                           .group:00000000 wm4.GPIO1.h.124.b7ee380ef904b55819a5c75398eefb42
+                           .group:00000000 wm4.string_api.h.9.a9265430fd330d238bc93998aef29e99
+                           .group:00000000 wm4.cstdlib.44.e27e649b4051799f046eccdb898dfe03
+                           .group:00000000 wm4.functions.h.43.2db76d1e4f85fdfb92f133b74bf2eabf
+
+UNDEFINED SYMBOLS
+CSBit_ClrVal
+CSBit_SetVal
+GPIO1_SetFieldValue
+LEDRed_SetVal
+LEDRed_ClrVal
+LEDGreen_SetVal
+LEDGreen_ClrVal
+PE_low_level_init
+puts
+putchar
+PWM1_Init
+GPIO1_Init
+CSBit_Init
+LEDGreen_Init
+LEDRed_Init
+delay
+download_RAM
+download_register
